@@ -13,7 +13,7 @@
     "db-migrate": "node ./node_modules/sequelize-cli-typescript/lib/sequelize db:migrate",
     "db-seed": "node ./node_modules/sequelize-cli-typescript/lib/sequelize db:seed:all"
   },
-  "repository": "git+https://github.com/fracxn/wallet.git",
+  "repository": "git+https://github.com/donchi4all/project-setup-node.git",
   "keywords": [
     "tokenization",
     "api",
@@ -22,9 +22,9 @@
   "author": "Mkparu Chisom Emmanuel",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/fracxn/wallet/issues"
+    "url": "https://github.com/donchi4all/project-setup-node/issues"
   },
-  "homepage": "https://github.com/fracxn/wallet#readme",
+  "homepage": "https://github.com/donchi4all/project-setup-node#readme",
   "dependencies": {
     "accesscontrol": "^2.2.1",
     "body-parser": "^1.20.1",

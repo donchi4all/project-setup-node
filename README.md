@@ -1,29 +1,20 @@
-# README #
+# Node API Project SetUp #
 
-This README would normally document whatever steps are necessary to get your application up and running.
-
+Node API project set up
 ### What is this repository for? ###
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+* API based Project SetUp
+* API Documentation (swagger)
 
 ### How do I get set up? ###
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+* Run `$ npm Install` on project-setup-node
+* Setup Database by copying `.env.example` to `.env` or run `$ cp .env.example .env` for mac user or git terminal and set you your database information
+* `$ npm run postinstall`
+* `$ npm run start`
+* You can also create your migration and seeders and can run test cases
+  
 
-### Contribution guidelines ###
+### For any issues? ###
 
-* Writing tests
-* Code review
-* Other guidelines
-
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
+* Report any issues by creating a new issue
