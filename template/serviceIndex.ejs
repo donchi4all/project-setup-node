@@ -1,0 +1,32 @@
+import { Queries } from '../../../interfaces/queries';
+import { <%= service.charAt(0).toUpperCase() + service.slice(1)  %>sDto } from './dtos/<%= service %>.dto';
+import <%= service %>Repo from './repository/<%= service %>.repository';
+
+export default class  <%= service.charAt(0).toUpperCase() + service.slice(1) %>Service {
+
+    static findAll = async (queries?: Queries) => {
+        return await  <%= service %>Repo.getAll(queries);
+    };
+
+    static findOne = async (id: string) => {
+        return  await  <%= service %>Repo.getOne(id);
+    };
+
+    static create = async (data:  <%= service.charAt(0).toUpperCase() + service.slice(1)  %>sDto) => {
+        return await  <%= service %>Repo.create(data);
+    };
+    static updateOne = async (data:  <%= service.charAt(0).toUpperCase() + service.slice(1)  %>sDto, id: string) => {
+        return await  <%= service %>Repo.updateOne(data, id);
+    };
+    static updateMany = async (data:  <%= service.charAt(0).toUpperCase() + service.slice(1)  %>sDto, ids: string[]) => {
+        return await  <%= service %>Repo.updateMany(data, ids);
+    };
+
+    static delete = async (id: string) => {
+        return await  <%= service %>Repo.deleteOne(id);
+     };
+
+    static deleteMany = async (ids: string[]) => {
+        return await  <%= service %>Repo.deleteMany(ids);
+    };
+}

@@ -1,0 +1,10 @@
+export class <%= service.charAt(0).toUpperCase() + service.slice(1) %>sDto {
+    constructor(data: Record<string, any>) {
+        this.name = data.name;
+        this.someOtherString = data.someOtherString;
+        this.createdBy = data.createdBy
+        }
+        readonly name!: string;
+        readonly someOtherString!: string;
+        readonly createdBy :string
+        }

@@ -1,0 +1,18 @@
+export default interface I<%= service.charAt(0).toUpperCase() + service.slice(1) %>Interface {
+    id?: string,
+    name: string;
+    someOtherString: string;
+    createdBy?: string
+    deletedAt?: string
+    createdAt?: string
+    updatedAt?: string
+    }
+
+
+export type <%= service.charAt(0).toUpperCase() + service.slice(1) %>CreationType = Pick<I<%=service.charAt(0).toUpperCase() + service.slice(1) %>Interface, "name" | "someOtherString" | "createdBy">;
+
+export interface I<%= service.charAt(0).toUpperCase() + service.slice(1) %>BulkUpdateInterface {
+    ids: string[],
+    name: string;
+    someOtherString: string;
+}

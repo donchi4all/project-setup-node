@@ -1,0 +1,155 @@
+import {
+    Body,
+    Controller,
+    Get,
+    Path,
+    Patch,
+    Put,
+    Post,
+    Delete,
+    Query,
+    Route,
+    SuccessResponse,
+    Tags,
+} from "tsoa";
+import <%= service %>Service from "../../services/<%= service%>";
+import httpStatuses from "../../../api/httpStatuses";
+import { LoggerDecorator, LoggerInterface } from "../../../modules/logger";
+import I<%= service.charAt(0).toUpperCase() + service.slice(1) %>Interface, { <%= service.charAt(0).toUpperCase() + service.slice(1) %>CreationType, I<%= service.charAt(0).toUpperCase() + service.slice(1) %>BulkUpdateInterface } from "../../models/<%= service%>/I<%= service.charAt(0).toUpperCase() + service.slice(1) %>";
+import { removeUndefined } from "../../../utils";
+import { <%=service.charAt(0).toUpperCase() + service.slice(1)%>sDto } from "../../services/<%= service %>/dtos/<%= service%>.dto";
+import <%= service %>sService from "../../services/<%= service %>";
+import { IPagination } from "../../../utils/queries/interface";
+import {ResponseTypeEnum, SuccessResponseModel } from "../../../modules/routes/response";
+
+
+@Route('<%= service %>s')
+@Tags('<%= service.charAt(0).toUpperCase() + service.slice(1)%>s')
+export class <%= service.charAt(0).toUpperCase() + service.slice(1) %>sController extends Controller {
+    @LoggerDecorator('Controller.<%= service.toUpperCase() %>`')
+    private log: LoggerInterface;
+
+    @SuccessResponse(httpStatuses.success.code, httpStatuses.success.message)
+    @Post()
+    public async create<%= service.charAt(0).toUpperCase() + service.slice(1) %>(
+        @Body() requestBody: <%= service.charAt(0).toUpperCase() + service.slice(1) %>CreationType
+    ): Promise<SuccessResponseModel<I<%= service.charAt(0).toUpperCase() + service.slice(1) %>Interface>> {
+        try {
+            let data = new <%= service.charAt(0).toUpperCase() + service.slice(1)  %>sDto(requestBody);
+            data = removeUndefined(data) as <%= service.charAt(0).toUpperCase() + service.slice(1)  %>sDto;
+
+            const create<%= service.charAt(0).toUpperCase() + service.slice(1) %> = await <%= service %>Service.create(data);
+            return new SuccessResponseModel<I<%= service.charAt(0).toUpperCase() + service.slice(1) %>Interface>(create<%= service.charAt(0).toUpperCase() + service.slice(1) %>)
+        } catch (err) {
+            this.log.error(`Route /<%= service %>s post with err: ${err}`);
+            throw err
+        }
+    }
+
+    @SuccessResponse(httpStatuses.success.code, httpStatuses.success.message)
+    @Get()
+    public async list<%= service.charAt(0).toUpperCase() + service.slice(1) %>s( 
+    @Query() page: number = 0,
+    @Query() limit: number = 50,
+    @Query() search?: string,
+    @Query() from?: string,
+    @Query() to?: string
+    ): Promise<SuccessResponseModel<I<%= service.charAt(0).toUpperCase() + service.slice(1)  %>Interface[]>> {
+        try {
+            let queries = {page, limit, search, from, to};
+          queries =  removeUndefined(queries)
+           
+          const { data: list<%= service.charAt(0).toUpperCase() + service.slice(1) %>s, pagination }= await <%= service %>Service.findAll(queries);
+          
+          return new SuccessResponseModel<I<%= service.charAt(0).toUpperCase() + service.slice(1) %>Interface[]>(list<%= service.charAt(0).toUpperCase() + service.slice(1) %>s, "<%= service.charAt(0).toUpperCase() + service.slice(1) %>'s successfully listed",ResponseTypeEnum.SUCCESS, pagination )
+        } catch (err) {
+            this.log.error(`Route /<%= service %>s get with err: ${err}`);
+            throw err
+        }
+    }
+
+    @SuccessResponse(httpStatuses.success.code, httpStatuses.success.message)
+    @Get('{<%= service %>Id}')
+    public async getOne<%= service.charAt(0).toUpperCase() + service.slice(1) %>(<%= service %>Id : string): Promise<SuccessResponseModel<I<%= service.charAt(0).toUpperCase() + service.slice(1)  %>Interface>> {
+        try {
+           
+           const found<%= service.charAt(0).toUpperCase() + service.slice(1) %> = await <%= service %>Service.findOne(<%= service %>Id);
+            return new SuccessResponseModel<I<%= service.charAt(0).toUpperCase() + service.slice(1) %>Interface>(found<%= service.charAt(0).toUpperCase() + service.slice(1) %>, "<%= service.charAt(0).toUpperCase() + service.slice(1) %>'s successfully listed",ResponseTypeEnum.SUCCESS )
+        } catch (err) {
+            this.log.error(`Route /<%= service %>s/${<%= service %>Id} get with err: ${err}`);
+            throw err
+        }
+    }
+
+    @SuccessResponse(httpStatuses.success.code, httpStatuses.success.message)
+    @Patch('{<%= service %>Id}')
+    public async update<%= service.charAt(0).toUpperCase() + service.slice(1) %>(
+    <%= service %>Id : string, 
+    @Body()
+    requestBody: <%= service.charAt(0).toUpperCase() + service.slice(1) %>CreationType): Promise<I<%= service.charAt(0).toUpperCase() + service.slice(1) %>Interface> {
+        try {
+          
+            let data = new <%= service.charAt(0).toUpperCase() + service.slice(1) %>sDto(requestBody);
+            data = removeUndefined(data) as <%= service.charAt(0).toUpperCase() + service.slice(1) %>sDto;
+           
+             await <%= service %>Service.updateOne(data, <%= service %>Id);
+             return  await <%= service %>Service.findOne(<%= service %>Id);
+        } catch (err) {
+            this.log.error(`Route /<%= service %>s/${<%= service %>Id} patch with err: ${err}`);
+            throw err
+        }
+    }
+
+
+    @SuccessResponse(httpStatuses.success.code, httpStatuses.success.message)
+    @Put()
+    public async updateMany<%= service.charAt(0).toUpperCase() + service.slice(1) %>(
+    @Body()
+    requestBody: I<%= service.charAt(0).toUpperCase() + service.slice(1) %>BulkUpdateInterface): Promise<{message: string}> {
+        try {
+            const body = requestBody;
+            const ids =  requestBody.ids;
+            let data = new <%= service.charAt(0).toUpperCase() + service.slice(1)  %>sDto(body);
+            data = removeUndefined(data) as <%= service.charAt(0).toUpperCase() + service.slice(1)  %>sDto;
+           
+            await <%= service %>sService.updateMany(data, ids);
+             return {message:'<%= service%>s updated successfully'}
+        } catch (err) {
+            this.log.error(`Route /<%= service %>s put with err: ${err}`);
+            throw err
+        }
+    }
+
+
+    @SuccessResponse(httpStatuses.success.code, httpStatuses.success.message)
+    @Delete('{<%= service %>Id}')
+    public async delete<%= service.charAt(0).toUpperCase() + service.slice(1) %>(
+    <%= service %>Id : string):  Promise<{message: string}> {
+        try {
+          
+            const id =  <%= service %>Id;           
+             await <%= service %>Service.delete(id);
+             return  {message: '<%= service %> deleted sucessfully'};
+        } catch (err) {
+            this.log.error(`Route /<%= service %>s delete with err: ${err}`);
+            throw err
+        }
+    }
+
+
+    @SuccessResponse(httpStatuses.success.code, httpStatuses.success.message)
+    @Delete()
+    public async deleteMany<%= service.charAt(0).toUpperCase() + service.slice(1) %>s(
+        @Body()
+        requestBody:{ids:I<%= service.charAt(0).toUpperCase() + service.slice(1) %>BulkUpdateInterface['ids']} ): Promise<{message: string}> {
+        try {
+          
+            const ids =  requestBody.ids;       
+            await <%= service %>sService.deleteMany(ids);
+             return {message:'<%= service%>s deleted successfully'}
+        } catch (err) {
+            this.log.error(`Route /<%= service %>s delete with err: ${err}`);
+            throw err
+        }
+    }
+}

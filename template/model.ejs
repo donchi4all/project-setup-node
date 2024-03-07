@@ -1,0 +1,59 @@
+import {
+Table,
+AutoIncrement,
+PrimaryKey,
+Column,
+Model,
+AllowNull,
+CreatedAt,
+UpdatedAt,
+DataType,
+Unique,
+DefaultScope,
+Default,
+DeletedAt
+} from 'sequelize-typescript';
+import I<%= service.charAt(0).toUpperCase() + service.slice(1) %>Interface, { <%= service.charAt(0).toUpperCase() +
+service.slice(1) %>CreationType } from "./I<%= service.charAt(0).toUpperCase() + service.slice(1) %>";
+
+@Table({
+    tableName: '<%= service %>s',
+})
+export class <%= service.charAt(0).toUpperCase() + service.slice(1) %> extends Model<I<%=service.charAt(0).toUpperCase() + service.slice(1) %>Interface, <%= service.charAt(0).toUpperCase() + service.slice(1) %>CreationType> {
+    @PrimaryKey
+    @Column({
+    type: DataType.UUID,
+    defaultValue: DataType.UUIDV4,
+    })
+    id: I<%= service.charAt(0).toUpperCase() + service.slice(1) %>Interface['id'];
+
+    @Unique(true)
+    @Column(DataType.STRING)
+    name: I<%= service.charAt(0).toUpperCase() + service.slice(1) %>Interface['name'];
+
+    @Column(DataType.STRING)
+    someOtherString: I<%= service.charAt(0).toUpperCase() + service.slice(1) %>Interface['someOtherString'];
+
+    @Column(DataType.UUID)
+    createdBy: I<%= service.charAt(0).toUpperCase() + service.slice(1) %>Interface['createdBy'];
+
+
+    @Default(null)
+    @DeletedAt
+    @Column(DataType.DATE)
+    deletedAt!: I<%= service.charAt(0).toUpperCase() + service.slice(1) %>Interface['deletedAt'];
+
+    @CreatedAt
+    @Column({
+    type: DataType.DATE,
+    defaultValue: DataType.NOW,
+    })
+    createdAt!: I<%= service.charAt(0).toUpperCase() + service.slice(1) %>Interface['createdAt'];
+
+    @UpdatedAt
+    @Column({
+    type: DataType.DATE,
+    defaultValue: DataType.NOW,
+    })
+    updatedAt!: I<%= service.charAt(0).toUpperCase() + service.slice(1) %>Interface['updatedAt'];
+}

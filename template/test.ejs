@@ -1,0 +1,40 @@
+import <%= service %>Service from "../src/api/services/<%= service %>";
+import Database, { sequelize } from './../src/modules/database';
+
+
+describe('<%= service.charAt(0).toUpperCase() + service.slice(1) %>Service', () => {
+
+    beforeAll(() => {
+        Database.init()
+    });
+
+    afterAll(async () => {
+        await sequelize.close();
+    });
+    it('should return a list of <%= service %>s', async () => {
+        const <%= service %>List = await <%= service %>Service.findAll();
+        expect(<%= service %>List).toBeDefined();
+        expect(<%= service %>List.data).toBeDefined();
+        expect(<%= service %>List.pagination).toBeDefined();
+        expect(<%= service %>List.data.length).toBeGreaterThan(0);
+        expect(<%= service %>List.data[0].id).toBeDefined();
+        expect(<%= service %>List.data[0].someOtherString).toBeDefined();
+        expect(<%= service %>List.data[0].createdAt).toBeDefined();
+        expect(<%= service %>List.data[0].createdBy).toBeDefined();
+    });
+
+    it('should create a new user', async () => {
+        const newUser = {
+            "name": "test user",
+            "someOtherString": "other user info",
+            "createdBy": "test admin"
+        };
+
+        const created<%= service.charAt(0).toUpperCase() + service.slice(1) %> = await <%= service %>Service.create(newUser);
+        expect(created<%= service.charAt(0).toUpperCase() + service.slice(1) %>).toBeDefined();
+        expect(created<%= service.charAt(0).toUpperCase() + service.slice(1) %>.id).toBeDefined();
+        expect(created<%= service.charAt(0).toUpperCase() + service.slice(1) %>.name).toBe(newUser.name);
+        expect(created<%= service.charAt(0).toUpperCase() + service.slice(1) %>.someOtherString).toBe(newUser.someOtherString);
+        expect(created<%= service.charAt(0).toUpperCase() + service.slice(1) %>.createdBy).toBe(newUser.createdBy);
+    });
+});

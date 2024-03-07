@@ -1,0 +1,22 @@
+{
+  "entryFile": "index.ts",
+  "noImplicitAdditionalProperties": "throw-on-extras",
+  "controllerPathGlobs": ["src/api/controllers/**/index.ts"],
+  "spec": {
+    "basePath": "/api",
+    "outputDirectory": "src/modules/routes",
+    "specVersion": 3,
+    "securityDefinitions": {
+      "accessToken": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "authorization"
+      }
+    }
+  },
+  "routes": {
+    "routesDir": "src/modules/routes",
+    "basePath": "/api"
+  },
+  "swagger": {}
+}

@@ -1,0 +1,66 @@
+import I<%= service.charAt(0).toUpperCase() + service.slice(1) %>Interface, {  <%= service.charAt(0).toUpperCase() + service.slice(1) %>CreationType } from "../../../models/<%= service %>/I<%= service.charAt(0).toUpperCase() + service.slice(1) %>";
+import {<%= service.charAt(0).toUpperCase() + service.slice(1) %>} from "../../../models/<%= service %>";
+import { getAllQuery } from "../../../../utils/queries";
+import { IPagination } from "../../../../utils/queries/interface";
+import { Queries } from "../../../../interfaces/queries";
+import { Op } from 'sequelize';
+
+export class <%= service.charAt(0).toUpperCase() + service.slice(1) %>Repo {
+ 
+
+    public getAll =async (queries: Queries):Promise<{data:I<%= service.charAt(0).toUpperCase() + service.slice(1) %>Interface[], pagination: IPagination}> => {
+        return await getAllQuery<<%= service.charAt(0).toUpperCase() + service.slice(1) %>>({
+            queries: { ...queries,  deletedAt: null },
+            model: <%= service.charAt(0).toUpperCase() + service.slice(1) %>,
+            searchColumns: ['name']
+        });
+    };
+
+    public getOne = async(id: string):Promise<I<%= service.charAt(0).toUpperCase() + service.slice(1) %>Interface> => {
+        return await <%= service.charAt(0).toUpperCase() + service.slice(1) %>.findOne({ where: { id } });
+    };
+  
+    public create = async(data: <%= service.charAt(0).toUpperCase() + service.slice(1) %>CreationType): Promise<I<%= service.charAt(0).toUpperCase() + service.slice(1) %>Interface> => {
+   
+       return await <%= service.charAt(0).toUpperCase() + service.slice(1) %>.create(data)
+   
+    }
+
+    public updateOne = async (data:Partial<<%= service.charAt(0).toUpperCase() + service.slice(1) %>CreationType>, id: string): Promise<I<%= service.charAt(0).toUpperCase() + service.slice(1) %>Interface> => {
+         await  <%= service.charAt(0).toUpperCase() + service.slice(1) %>.update(data, { where: { id } });
+         return await this.getOne(id);
+    };
+
+    public updateMany = async(data:Partial<<%= service.charAt(0).toUpperCase() + service.slice(1) %>CreationType>, ids: string[]): Promise<any> => {
+        return await <%= service.charAt(0).toUpperCase() + service.slice(1) %>.update(data, {
+            where: {
+                id: {
+                    [Op.in]: ids
+                }
+            }
+        });
+    };
+
+    public deleteOne =async (id: string):Promise<number> => {
+        const [count] =  await <%= service.charAt(0).toUpperCase() + service.slice(1) %>.update({  deletedAt: null }, { where: { id } });
+        return count;
+    };
+
+    public deleteMany = async(ids: string[]):Promise<number> => {
+        const [count] =  await <%= service.charAt(0).toUpperCase() + service.slice(1) %>.update(
+            {deletedAt: null },
+            {
+                where: {
+                    id: {
+                        [Op.in]: ids
+                    }
+                }
+            }
+        );
+        return count;
+    };
+
+  }
+  
+  const <%= service %>Repo = new <%= service.charAt(0).toUpperCase() + service.slice(1) %>Repo();
+  export default <%= service %>Repo;
