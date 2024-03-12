@@ -93,8 +93,8 @@ describe('<%= service.charAt(0).toUpperCase() + service.slice(1) %>Service', () 
         const list  = await <%= service %>Service.findAll();
         const ids = list.data.map(<%= service %>s => <%= service %>s.id)
 
-        const updatedPost = await <%= service %>Service.deleteMany(ids);
-        expect(updatedPost).toBeDefined();
-        expect(updatedPost).toBeGreaterThanOrEqual(0);
+        const updated<%= service.charAt(0).toUpperCase() + service.slice(1) %> = await <%= service %>Service.deleteMany(ids);
+        expect(updated<%= service.charAt(0).toUpperCase() + service.slice(1) %>).toBeDefined();
+        expect(updated<%= service.charAt(0).toUpperCase() + service.slice(1) %>).toBeGreaterThanOrEqual(0);
     });
 });
