@@ -11,6 +11,23 @@ describe('<%= service.charAt(0).toUpperCase() + service.slice(1) %>Service', () 
     afterAll(async () => {
         await sequelize.close();
     });
+
+
+    it('should create a new <%= service%>', async () => {
+        const new<%= service.charAt(0).toUpperCase() + service.slice(1)  %> = {
+            "name": "test <%= service %>",
+            "someOtherString": "other <%= service %> info",
+            "createdBy": "test admin"
+        };
+
+        const created<%= service.charAt(0).toUpperCase() + service.slice(1) %> = await <%= service %>Service.create(new<%= service.charAt(0).toUpperCase() + service.slice(1) %>);
+        expect(created<%= service.charAt(0).toUpperCase() + service.slice(1) %>).toBeDefined();
+        expect(created<%= service.charAt(0).toUpperCase() + service.slice(1) %>.id).toBeDefined();
+        expect(created<%= service.charAt(0).toUpperCase() + service.slice(1) %>.name).toBe(new<%= service.charAt(0).toUpperCase() + service.slice(1) %>.name);
+        expect(created<%= service.charAt(0).toUpperCase() + service.slice(1) %>.someOtherString).toBe(new<%= service.charAt(0).toUpperCase() + service.slice(1) %>.someOtherString);
+        expect(created<%= service.charAt(0).toUpperCase() + service.slice(1) %>.createdBy).toBe(new<%= service.charAt(0).toUpperCase() + service.slice(1) %>.createdBy);
+    });
+
     it('should return a list of <%= service %>s', async () => {
         const <%= service %>List = await <%= service %>Service.findAll();
         expect(<%= service %>List).toBeDefined();
@@ -23,18 +40,61 @@ describe('<%= service.charAt(0).toUpperCase() + service.slice(1) %>Service', () 
         expect(<%= service %>List.data[0].createdBy).toBeDefined();
     });
 
-    it('should create a new user', async () => {
-        const newUser = {
-            "name": "test user",
-            "someOtherString": "other user info",
-            "createdBy": "test admin"
-        };
+    it('should return a <%= service %>', async () => {
+        const list  = await <%= service %>Service.findAll();
+        const <%= service %>= await <%= service %>Service.findOne(list.data[0].id);
+        expect(<%= service %>).toBeDefined();
+        expect(<%= service %>.id).toBeDefined();
+        expect(<%= service %>.someOtherString).toBeDefined();
+        expect(<%= service %>.createdAt).toBeDefined();
+        expect(<%= service %>.createdBy).toBeDefined();
+    });
 
-        const created<%= service.charAt(0).toUpperCase() + service.slice(1) %> = await <%= service %>Service.create(newUser);
-        expect(created<%= service.charAt(0).toUpperCase() + service.slice(1) %>).toBeDefined();
-        expect(created<%= service.charAt(0).toUpperCase() + service.slice(1) %>.id).toBeDefined();
-        expect(created<%= service.charAt(0).toUpperCase() + service.slice(1) %>.name).toBe(newUser.name);
-        expect(created<%= service.charAt(0).toUpperCase() + service.slice(1) %>.someOtherString).toBe(newUser.someOtherString);
-        expect(created<%= service.charAt(0).toUpperCase() + service.slice(1) %>.createdBy).toBe(newUser.createdBy);
+    it('should update a <%= service %> by id', async () => {
+        const update<%= service.charAt(0).toUpperCase() + service.slice(1) %> = {
+            name: "test <%= service %> update",
+            someOtherString: "other <%= service %> update info",
+            createdBy: "new user"
+        };
+        const list  = await <%= service %>Service.findAll();
+        const id = list.data[0].id
+        const updated<%= service.charAt(0).toUpperCase() + service.slice(1) %> = await <%= service %>Service.updateOne(update<%= service.charAt(0).toUpperCase() + service.slice(1) %>, id );
+        expect(updated<%= service.charAt(0).toUpperCase() + service.slice(1) %>).toBeDefined();
+        expect(updated<%= service.charAt(0).toUpperCase() + service.slice(1) %>.id).toBe(id);
+        expect(updated<%= service.charAt(0).toUpperCase() + service.slice(1) %>.name).toBe(update<%= service.charAt(0).toUpperCase() + service.slice(1) %>.name);
+        expect(updated<%= service.charAt(0).toUpperCase() + service.slice(1) %>.someOtherString).toBe(update<%= service.charAt(0).toUpperCase() + service.slice(1) %>.someOtherString);
+        expect(updated<%= service.charAt(0).toUpperCase() + service.slice(1) %>.createdBy).toBe(update<%= service.charAt(0).toUpperCase() + service.slice(1) %>.createdBy);
+    });
+
+    it('should update <%= service %>s by ids', async () => {
+        const update<%= service.charAt(0).toUpperCase() + service.slice(1) %> = {
+            name: "test <%= service %>s update",
+            someOtherString: "other <%= service %>s update info",
+            createdBy: "new user"
+        };
+        const list  = await <%= service %>Service.findAll();
+        const ids = list.data.map(<%= service %>s => <%= service %>s.id)
+        const updated<%= service.charAt(0).toUpperCase() + service.slice(1) %> = await <%= service %>Service.updateMany(update<%= service.charAt(0).toUpperCase() + service.slice(1) %>, ids );
+        expect(updated<%= service.charAt(0).toUpperCase() + service.slice(1) %>).toBeDefined();
+        expect(updated<%= service.charAt(0).toUpperCase() + service.slice(1) %>.length).toBeGreaterThanOrEqual(1);
+        expect(updated<%= service.charAt(0).toUpperCase() + service.slice(1) %>[0]).toBe(ids.length);
+    });
+
+    it('should delete a <%= service %>', async () => {
+        
+        const list  = await <%= service %>Service.findAll();
+        const updated<%= service.charAt(0).toUpperCase() + service.slice(1) %> = await <%= service %>Service.delete(list.data[0].id);
+        expect(updated<%= service.charAt(0).toUpperCase() + service.slice(1) %>).toBeDefined();
+        expect(updated<%= service.charAt(0).toUpperCase() + service.slice(1) %>).toBeGreaterThanOrEqual(0);
+    });
+
+    it('should delete <%= service %>s', async () => {
+        
+        const list  = await <%= service %>Service.findAll();
+        const ids = list.data.map(<%= service %>s => <%= service %>s.id)
+
+        const updated<%= service.charAt(0).toUpperCase() + service.slice(1) %> = await <%= service %>Service.deleteMany(ids);
+        expect(updated<%= service.charAt(0).toUpperCase() + service.slice(1) %>).toBeDefined();
+        expect(updated<%= service.charAt(0).toUpperCase() + service.slice(1) %>).toBeGreaterThanOrEqual(0);
     });
 });

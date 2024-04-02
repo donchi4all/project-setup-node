@@ -42,13 +42,13 @@ export class <%= service.charAt(0).toUpperCase() + service.slice(1) %>Repo {
     };
 
     public deleteOne =async (id: string):Promise<number> => {
-        const [count] =  await <%= service.charAt(0).toUpperCase() + service.slice(1) %>.update({  deletedAt: null }, { where: { id } });
-        return count;
+        const result =  await <%= service.charAt(0).toUpperCase() + service.slice(1) %>.destroy({ where: { id } });
+        return result;
     };
 
     public deleteMany = async(ids: string[]):Promise<number> => {
-        const [count] =  await <%= service.charAt(0).toUpperCase() + service.slice(1) %>.update(
-            {deletedAt: null },
+        const count =  await <%= service.charAt(0).toUpperCase() + service.slice(1) %>.destroy(
+           
             {
                 where: {
                     id: {
