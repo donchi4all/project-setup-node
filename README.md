@@ -1,6 +1,8 @@
+
+# **📌 `READ ME `  Version: 3.0.0**
 ```md
 # API Generator 🚀  
-An advanced API generator that helps in **generating CRUD endpoints** directly from the terminal.  
+An advanced API generator that helps in **generating CRUD endpoints** and **database seeders** directly from the terminal.  
 **Version: 3.0.0**
 
 ---
@@ -50,20 +52,66 @@ npx plop service
 _Enter `user` when prompted_
 
 ### **Generated Routes for `user`**
-| Method | Endpoint | Description |
-|--------|---------|-------------|
-| **POST** | `/users` | Create a new user |
-| **GET** | `/users` | Get all users (supports pagination, search, and date range) |
-| **GET** | `/users/{id}` | Get a single user |
-| **PUT** | `/users` | Update multiple users |
-| **PATCH** | `/users/{id}` | Update a single user |
-| **DELETE** | `/users/{id}` | Delete a single user |
-| **DELETE** | `/users` | Delete multiple users |
+| Method     | Endpoint      | Description                                                 |
+| ---------- | ------------- | ----------------------------------------------------------- |
+| **POST**   | `/users`      | Create a new user                                           |
+| **GET**    | `/users`      | Get all users (supports pagination, search, and date range) |
+| **GET**    | `/users/{id}` | Get a single user                                           |
+| **PUT**    | `/users`      | Update multiple users                                       |
+| **PATCH**  | `/users/{id}` | Update a single user                                        |
+| **DELETE** | `/users/{id}` | Delete a single user                                        |
+| **DELETE** | `/users`      | Delete multiple users                                       |
 
 ---
 
+## **📌 Generate Database Seeder**
+### **Using Plop (Seeder Generator)**
+```sh
+npx plop seed
+```
 
-> 🚀 **Routes are loaded automatically. No manual setup required!**
+### **What Does This Command Do?**
+This will generate a **Seeder file** for your database, allowing you to insert default data automatically.
+
+### **Example: Generate a Seeder for `users` Table**
+```sh
+npx plop seed
+```
+_Enter `user` when prompted_
+
+### **Generated Seeder File (`src/seeders/2025-03-02-seed-users.js`)**
+```javascript
+'use strict';
+
+/** @type {import('sequelize-cli').Migration} */
+module.exports = {
+  async up(queryInterface, Sequelize) {
+    /**
+     * Add seed commands here.
+     */
+
+    await queryInterface.bulkInsert('users', [{
+      id: '99b23552-314f-457b-8291-2a32feb46ed9',
+      email: 'user@example.com',
+      password: '28f6a5f5ac65a9adaf5693efbfa7c05e5bff31bafbc4f66063989af6d9f142c0',
+      status: 'active',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }], 
+    {
+      updateOnDuplicate: ['updatedAt'],
+    });
+
+  },
+
+  async down(queryInterface, Sequelize) {
+    /**
+     * Add commands to revert user seed here.
+     */
+    await queryInterface.bulkDelete('users', null, {});
+  }
+};
+```
 
 ---
 
@@ -80,7 +128,7 @@ _Enter `user` when prompted_
   - middleware
   - migrations
   - modules
-  - seeders
+  - seeders   # Now includes database seeders
   - types
   - utils
 - templates  # This is where Plop.js templates (.hbs) are stored
@@ -111,6 +159,7 @@ npm start
 ✅ **Automatic code formatting with ESLint & Prettier after file generation**.  
 ✅ **Custom migration naming for better tracking**.  
 ✅ **More optimized Sequelize queries for better performance**.  
+✅ **Added database seeder generator (`npx plop seed`)**.
 
 ---
 
@@ -137,18 +186,18 @@ npm start
 
 ---
 
-### **✅ Summary of Updates**
-✔ **Kept `plop` instead of `donsoft`**.  
-✔ **Updated `templates` folder reference** instead of `gulp`.  
-✔ **Switched `gulp` usage with `npx plop service`** for generating APIs.  
-✔ **Clarified that Plop uses `.hbs` templates instead of `.ejs`**.  
-✔ **Improved versioning explanation and project structure details**.  
+## **✅ Summary of Updates**
+✔ **Added Seeder Documentation** (`npx plop seed`).  
+✔ **Included Example Seeder Output** (`src/seeders/2025-03-02-seed-users.js`).  
+✔ **Updated Project Structure to Include `seeders/` Directory**.  
+✔ **Clarified What the Seeder Generator Does**.  
+✔ **Ensured Everything Works with the New `plopfile.js`**.  
 
 ---
 
-### **📌 Next Steps**
-1️⃣ **Replace your current `README.md` with this updated version**.  
-2️⃣ **Run `npx plop service` to generate a new API and confirm everything works.**  
+## **📌 Next Steps**
+1️⃣ **Replace your current `README.md` with this updated version.**  
+2️⃣ **Run `npx plop seed` to generate a new seeder and verify the output.**  
 3️⃣ **Commit and push the changes!** 🚀🔥  
 
 Let me know if you need any further refinements! 😊🔥

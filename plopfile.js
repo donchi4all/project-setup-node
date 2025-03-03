@@ -1,4 +1,5 @@
 const dayjs = require("dayjs");
+const { v4: uuidv4 } = require("uuid");
 
 module.exports = function (plop) {
     // Helpers for text formatting
@@ -55,6 +56,47 @@ module.exports = function (plop) {
                 type: "add",
                 path: "tests/{{service}}.test.ts",
                 templateFile: "templates/test.hbs",
+            },
+        ],
+    });
+
+    // Seed Generator
+    plop.setGenerator("seed", {
+        description: "Generate a new seed file",
+        prompts: [
+            {
+                type: "input",
+                name: "service",
+                message: "Enter the table name (singular):",
+            },
+            {
+                type: "input",
+                name: "email",
+                message: "Enter the email (if applicable):",
+                default: "user@example.com",
+            },
+            {
+                type: "input",
+                name: "plainPassword",
+                message: "Enter the plain text password:",
+                default: "Password@1",
+            },
+            {
+                type: "input",
+                name: "status",
+                message: "Enter the status:",
+                default: "active",
+            },
+        ],
+        actions: [
+            {
+                type: "add",
+                path: "src/seeders/{{timestamp}}-seed-{{service}}s.js",
+                templateFile: "templates/modelSeed.hbs",
+                data: {
+                    uuid: uuidv4(),
+                    hashedPassword: "28f6a5f5ac65a9adaf5693efbfa7c05e5bff31bafbc4f66063989af6d9f142c0",
+                },
             },
         ],
     });
