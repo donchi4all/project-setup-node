@@ -8,8 +8,7 @@ import { DatabaseDialectType, DbEnvInterface } from './IDbEnv';
 import { SaltsInterface } from './ISaltsEnv';
 import { CorsInterface } from './ICors';
 import { UrlsInterface } from './IUrlsEnv';
-import { IAWSInterface } from './IAWSEnv';
-import { CbaInterface } from './ICbaEnv';
+import { AuditInterface } from './IAuditEnv';
 
 
 class Secret {
@@ -102,7 +101,21 @@ class Secret {
     }
   }
 
-
+  public get DbLogs(): DbEnvInterface {
+    try {
+      return {
+        dialect: this.getOsEnv('DB_CONNECTION') as DatabaseDialectType,
+        database: this.getOsEnv('DB_LOG_DATABASE'),
+        username: this.getOsEnv('DB_USERNAME'),
+        password: this.getOsEnv('DB_PASSWORD'),
+        host: this.getOsEnv('DB_HOST'),
+        port: this.toNumber(this.getOsEnv('DB_PORT')),
+      };
+    } catch (err) {
+      this.log.error(`Database env error: ${err.message}`);
+      throw err;
+    }
+  }
 
 
   /**
@@ -136,6 +149,20 @@ class Secret {
     }
   }
 
+  /**
+   * Audit Log environment
+   */
+  public get Audit(): AuditInterface {
+    try {
+      return {
+        enableAPILog: this.toBool(this.getOsEnv('API_LOG')),
+        enableCrudLog: this.toBool(this.getOsEnv('CRUD_LOG')),
+      };
+    } catch (err) {
+      this.log.error(`audit env error: ${err.message}`);
+      throw err;
+    }
+  }
 
 }
 

@@ -1,0 +1,57 @@
+import I{{capitalize service}}Interface, {  {{capitalize service}}CreationType } from "../../../models/{{service}}/I{{capitalize service}}";
+import { {{capitalize service}} } from "../../../models/{{service}}";
+import { getAllQuery } from "../../../../utils/queries";
+import { IPagination } from "../../../../utils/queries/interface";
+import { Queries } from "../../../../interfaces/queries";
+import { Op } from 'sequelize';
+
+export class {{capitalize service}}Repo {
+ 
+    public getAll = async (queries: Queries): Promise<{ data: I{{capitalize service}}Interface[], pagination: IPagination }> => {
+        return await getAllQuery<{{capitalize service}}>({
+            queries: { ...queries, deletedAt: null },
+            model: {{capitalize service}},
+            searchColumns: ['name']
+        });
+    };
+
+    public getOne = async (id: string): Promise<I{{capitalize service}}Interface | null> => {
+        return await {{capitalize service}}.findOne({ where: { id } });
+    };
+  
+    public create = async (data: {{capitalize service}}CreationType): Promise<I{{capitalize service}}Interface> => {
+       return await {{capitalize service}}.create(data);
+    };
+
+    public updateOne = async (data: Partial<{{capitalize service}}CreationType>, id: string): Promise<I{{capitalize service}}Interface | null> => {
+         await {{capitalize service}}.update(data, { where: { id } });
+         return await this.getOne(id);
+    };
+
+    public updateMany = async (data: Partial<{{capitalize service}}CreationType>, ids: string[]) => {
+        return await {{capitalize service}}.update(data, {
+            where: {
+                id: {
+                    [Op.in]: ids
+                }
+            }
+        });
+    };
+
+    public deleteOne = async (id: string): Promise<number> => {
+        return await {{capitalize service}}.destroy({ where: { id } });
+    };
+
+    public deleteMany = async (ids: string[]): Promise<number> => {
+        return await {{capitalize service}}.destroy({
+            where: {
+                id: {
+                    [Op.in]: ids
+                }
+            }
+        });
+    };
+}
+  
+const {{service}}Repo = new {{capitalize service}}Repo();
+export default {{service}}Repo;
