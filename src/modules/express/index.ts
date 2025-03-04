@@ -6,7 +6,7 @@ import cookieParser from 'cookie-parser';
 // import * as Sentry from '@sentry/node';
 
 
-import { 
+import {
   Errors
 } from '../../middleware';
 import config from '../../config';
@@ -49,11 +49,25 @@ class Express {
   }
 
   private mountRoutes(): void {
+    this.express.get('/api/ips', (request, response) => {
+      const clientIP =
+        request.headers['x-forwarded-for'] || request.connection.remoteAddress;
+
+      response.send(`Client IP: ${clientIP}  --- ${request.ip}`);
+    });
+
+
+    // Swagger UI route (avoid returning Promise<Response>)
     this.express.use(
       config.swagger.route,
       swaggerUi.serve,
-      async (req: express.Request, res: express.Response) => {
-        return res.send(swaggerUi.generateHTML(SwaggerJson));
+      async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+        try {
+          const html = swaggerUi.generateHTML(SwaggerJson);
+          res.send(html); // Don't return here, ensure Promise<void>
+        } catch (error) {
+          next(error);
+        }
       }
     );
 

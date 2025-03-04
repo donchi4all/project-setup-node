@@ -1,0 +1,96 @@
+import {{service}}Service from "../src/api/services/{{service}}";
+import Database, { sequelize } from './../src/modules/database';
+
+describe('{{capitalize service}}Service', () => {
+
+    beforeAll(() => {
+        Database.init();
+    });
+
+    afterAll(async () => {
+        await sequelize.close();
+    });
+
+    it('should create a new {{service}}', async () => {
+        const new{{capitalize service}} = {
+            "name": "test {{service}}",
+            "someOtherString": "other {{service}} info",
+            "createdBy": "test admin"
+        };
+
+        const created{{capitalize service}} = await {{service}}Service.create(new{{capitalize service}});
+        expect(created{{capitalize service}}).toBeDefined();
+        expect(created{{capitalize service}}.id).toBeDefined();
+        expect(created{{capitalize service}}.name).toBe(new{{capitalize service}}.name);
+        expect(created{{capitalize service}}.someOtherString).toBe(new{{capitalize service}}.someOtherString);
+        expect(created{{capitalize service}}.createdBy).toBe(new{{capitalize service}}.createdBy);
+    });
+
+    it('should return a list of {{service}}s', async () => {
+        const {{service}}List = await {{service}}Service.findAll();
+        expect({{service}}List).toBeDefined();
+        expect({{service}}List.data).toBeDefined();
+        expect({{service}}List.pagination).toBeDefined();
+        expect({{service}}List.data.length).toBeGreaterThan(0);
+        expect({{service}}List.data[0].id).toBeDefined();
+        expect({{service}}List.data[0].someOtherString).toBeDefined();
+        expect({{service}}List.data[0].createdAt).toBeDefined();
+        expect({{service}}List.data[0].createdBy).toBeDefined();
+    });
+
+    it('should return a single {{service}}', async () => {
+        const list  = await {{service}}Service.findAll();
+        const {{service}} = await {{service}}Service.findOne(list.data[0].id);
+        expect({{service}}).toBeDefined();
+        expect({{service}}.id).toBeDefined();
+        expect({{service}}.someOtherString).toBeDefined();
+        expect({{service}}.createdAt).toBeDefined();
+        expect({{service}}.createdBy).toBeDefined();
+    });
+
+    it('should update a {{service}} by id', async () => {
+        const update{{capitalize service}} = {
+            name: "test {{service}} update",
+            someOtherString: "other {{service}} update info",
+            createdBy: "new user"
+        };
+        const list  = await {{service}}Service.findAll();
+        const id = list.data[0].id;
+        const updated{{capitalize service}} = await {{service}}Service.updateOne(update{{capitalize service}}, id);
+        expect(updated{{capitalize service}}).toBeDefined();
+        expect(updated{{capitalize service}}.id).toBe(id);
+        expect(updated{{capitalize service}}.name).toBe(update{{capitalize service}}.name);
+        expect(updated{{capitalize service}}.someOtherString).toBe(update{{capitalize service}}.someOtherString);
+        expect(updated{{capitalize service}}.createdBy).toBe(update{{capitalize service}}.createdBy);
+    });
+
+    it('should update multiple {{service}}s by ids', async () => {
+        const update{{capitalize service}} = {
+            name: "test {{service}}s update",
+            someOtherString: "other {{service}}s update info",
+            createdBy: "new user"
+        };
+        const list  = await {{service}}Service.findAll();
+        const ids = list.data.map({{service}} => {{service}}.id);
+        const updated{{capitalize service}} = await {{service}}Service.updateMany(update{{capitalize service}}, ids);
+        expect(updated{{capitalize service}}).toBeDefined();
+        expect(updated{{capitalize service}}.length).toBeGreaterThanOrEqual(1);
+        expect(updated{{capitalize service}}[0]).toBe(ids.length);
+    });
+
+    it('should delete a {{service}}', async () => {
+        const list  = await {{service}}Service.findAll();
+        const deleted{{capitalize service}} = await {{service}}Service.delete(list.data[0].id);
+        expect(deleted{{capitalize service}}).toBeDefined();
+        expect(deleted{{capitalize service}}).toBeGreaterThanOrEqual(0);
+    });
+
+    it('should delete multiple {{service}}s', async () => {
+        const list  = await {{service}}Service.findAll();
+        const ids = list.data.map({{service}} => {{service}}.id);
+        const deleted{{capitalize service}} = await {{service}}Service.deleteMany(ids);
+        expect(deleted{{capitalize service}}).toBeDefined();
+        expect(deleted{{capitalize service}}).toBeGreaterThanOrEqual(0);
+    });
+
+});

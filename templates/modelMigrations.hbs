@@ -2,7 +2,7 @@
 
 module.exports = {
 async up(queryInterface, Sequelize) {
-await queryInterface.createTable('<%= service %>s', {
+await queryInterface.createTable('{{service}}s', {
     id: {
     allowNull: false,
     primaryKey: true,
@@ -37,9 +37,9 @@ await queryInterface.createTable('<%= service %>s', {
     allowNull: true,
     type: Sequelize.DATE,
     },
-    });
+});
+},
+async down(queryInterface, Sequelize) {
+    await queryInterface.dropTable('{{service}}s');
     },
-    async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('<%= service %>s');
-        },
-        };
+};

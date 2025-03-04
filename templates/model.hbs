@@ -1,0 +1,64 @@
+import {
+    Table,
+    AutoIncrement,
+    PrimaryKey,
+    Column,
+    Model,
+    AllowNull,
+    CreatedAt,
+    UpdatedAt,
+    DataType,
+    Unique,
+    Default,
+    DeletedAt
+} from 'sequelize-typescript';
+
+import I{{capitalize service}}Interface, { 
+    {{capitalize service}}CreationType 
+} from "./I{{capitalize service}}";
+
+@Table({
+    tableName: '{{service}}s',
+    timestamps: true,
+    paranoid: true
+})
+export class {{capitalize service}} extends Model<I{{capitalize service}}Interface, {{capitalize service}}CreationType> {
+
+    @PrimaryKey
+    @Column({
+        type: DataType.UUID,
+        defaultValue: DataType.UUIDV4,
+    })
+    id!: I{{capitalize service}}Interface['id'];
+
+    @Unique(true)
+    @AllowNull(false)
+    @Column(DataType.STRING)
+    name!: I{{capitalize service}}Interface['name'];
+
+    @Column(DataType.STRING)
+    someOtherString!: I{{capitalize service}}Interface['someOtherString'];
+
+    @AllowNull(false)
+    @Column(DataType.UUID)
+    createdBy!: I{{capitalize service}}Interface['createdBy'];
+
+    @Default(null)
+    @DeletedAt
+    @Column(DataType.DATE)
+    deletedAt!: I{{capitalize service}}Interface['deletedAt'];
+
+    @CreatedAt
+    @Column({
+        type: DataType.DATE,
+        defaultValue: DataType.NOW,
+    })
+    createdAt!: I{{capitalize service}}Interface['createdAt'];
+
+    @UpdatedAt
+    @Column({
+        type: DataType.DATE,
+        defaultValue: DataType.NOW,
+    })
+    updatedAt!: I{{capitalize service}}Interface['updatedAt'];
+}

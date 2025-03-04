@@ -123,7 +123,7 @@ export const getAllQuery1 = async ({ queries, model, populate }: IQueryData) => 
             for (const n in splitSort) {
                 if (typeof splitSort[n] === 'string') {
                     if (splitSort[n][0] === '-') {
-                        _query.order.push([splitSort[n].substr('1'), 'DESC']);
+                        _query.order.push([splitSort[n].substr(1), 'DESC']);
                     } else {
                         _query.order.push([splitSort[n], 'ASC']);
                     }
@@ -577,7 +577,7 @@ export const getAllQuery = async <T extends Model>(
         // Generate PDF file and attach download url
         const html = convertToHtml(data, headers); // function to convert data to HTML
 
-        const browser = await puppeteer.launch({ headless: 'new' });
+        const browser = await puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'], headless: true });
         const page = await browser.newPage();
 
         await page.setContent(html);

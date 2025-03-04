@@ -1,0 +1,17 @@
+export default interface I{{capitalize service}}Interface {
+    id?: string;
+    name: string;
+    someOtherString: string;
+    createdBy?: string;
+    deletedAt?: string;
+    createdAt?: string;
+    updatedAt?: string;
+}
+
+export type {{capitalize service}}CreationType = Pick<I{{capitalize service}}Interface, "name" | "someOtherString" | "createdBy">;
+
+export interface I{{capitalize service}}BulkUpdateInterface {
+    ids: string[];
+    name: string;
+    someOtherString: string;
+}
