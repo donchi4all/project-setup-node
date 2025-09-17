@@ -12,17 +12,14 @@ export function endOfDay(date: string) {
   return new Date(new Date(`${date} GMT`).setUTCHours(23, 59, 59, 999));
 }
 
-export function toDateFormat(
-  date: string | number,
-  format: string = 'DD MMMM YYYY'
-) {
+export function toDateFormat(date: string | number, format: string = 'DD MMMM YYYY') {
   return moment(new Date(date)).format(format);
 }
 // unitOfTime can be hours or days etc..
 export function checkDate(
   date: string | Date | number,
   interval: number = 24,
-  unitOfTime: moment.unitOfTime.Diff = 'hours'
+  unitOfTime: moment.unitOfTime.Diff = 'hours',
 ) {
   const newDate = moment(new Date(date));
   const currentDate = moment(new Date());
@@ -60,11 +57,15 @@ export function isValidMonth(month: number) {
 }
 
 export function startOfMonth(month: number, year: number) {
-  return moment({ year, month: month - 1 }).startOf('month').format('YYYY-MM-DD HH:mm:ss');
+  return moment({ year, month: month - 1 })
+    .startOf('month')
+    .format('YYYY-MM-DD HH:mm:ss');
 }
 
 export function endOfMonth(month: number, year: number) {
-  return moment({ year, month: month - 1 }).endOf('month').format('YYYY-MM-DD HH:mm:ss');
+  return moment({ year, month: month - 1 })
+    .endOf('month')
+    .format('YYYY-MM-DD HH:mm:ss');
 }
 
 export function currentMonth() {
@@ -74,4 +75,3 @@ export function currentMonth() {
 export function currentYear() {
   return moment().year();
 }
-

@@ -1,6 +1,11 @@
 import { ErrorInterface } from './IError';
 import { ErrorHandler } from './ErrorHandler';
-import { DatabaseError, ForeignKeyConstraintError, UniqueConstraintError, ValidationError } from 'sequelize';
+import {
+  DatabaseError,
+  ForeignKeyConstraintError,
+  UniqueConstraintError,
+  ValidationError,
+} from 'sequelize';
 
 export class CommonErrorHandler extends ErrorHandler {
   constructor(err: ErrorInterface) {
@@ -64,9 +69,8 @@ export class CommonErrorHandler extends ErrorHandler {
   }
 
   public static handleSequelizeError(error: any, modelName: string = null): ErrorInterface {
-
     if (error instanceof UniqueConstraintError) {
-      return this.AlreadyExists(modelName)
+      return this.AlreadyExists(modelName);
     }
 
     if (error instanceof ForeignKeyConstraintError) {

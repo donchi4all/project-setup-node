@@ -12,11 +12,12 @@ export type ValidateResultItem = {
 export type ValidateResult = {
   isValid: boolean;
   data: Record<string, ValidateResultItem>;
-}
+};
 
 export default class Validation {
-  public static validateObject (
-    validateObj: ValidateObject, validateScheme: ValidateScheme
+  public static validateObject(
+    validateObj: ValidateObject,
+    validateScheme: ValidateScheme,
   ): ValidateResult {
     return Object.entries(validateObj).reduce(
       (result, [key, value]) => {
@@ -31,4 +32,4 @@ export default class Validation {
       { isValid: true, data: {} } as ValidateResult,
     );
   }
-} 
+}

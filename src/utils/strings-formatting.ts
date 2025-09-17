@@ -4,9 +4,8 @@ export default class StringsFormatting {
   }
 
   public static snakeToCamel(str: string): string {
-    return str.replace(
-      /([-_][a-z])/g,
-      (group) => group.toUpperCase().replace('-', '').replace('_', '')
+    return str.replace(/([-_][a-z])/g, (group) =>
+      group.toUpperCase().replace('-', '').replace('_', ''),
     );
   }
 
@@ -15,7 +14,10 @@ export default class StringsFormatting {
   }
 
   public static toSlugCase(str: string): string {
-    return str.replace(/ /g, '-').replace(/[^\w-]+/g, '').toLowerCase();
+    return str
+      .replace(/ /g, '-')
+      .replace(/[^\w-]+/g, '')
+      .toLowerCase();
   }
 
   public static toSentenceCase(str: string): string {
@@ -41,5 +43,4 @@ export default class StringsFormatting {
 
     return randomString;
   }
-
 }

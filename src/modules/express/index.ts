@@ -5,10 +5,7 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 // import * as Sentry from '@sentry/node';
 
-
-import {
-  Errors
-} from '../../middleware';
+import { Errors } from '../../middleware';
 import config from '../../config';
 // import CronJob from '../../config/cronjob';
 import Secret from '../secret';
@@ -50,12 +47,10 @@ class Express {
 
   private mountRoutes(): void {
     this.express.get('/api/ips', (request, response) => {
-      const clientIP =
-        request.headers['x-forwarded-for'] || request.connection.remoteAddress;
+      const clientIP = request.headers['x-forwarded-for'] || request.connection.remoteAddress;
 
       response.send(`Client IP: ${clientIP}  --- ${request.ip}`);
     });
-
 
     // Swagger UI route (avoid returning Promise<Response>)
     this.express.use(
@@ -68,7 +63,7 @@ class Express {
         } catch (error) {
           next(error);
         }
-      }
+      },
     );
 
     RegisterRoutes(this.express);
@@ -89,11 +84,8 @@ class Express {
 
       // Start the server on the specified port
       this.express.listen(Secret.App.port, () => {
-        this.log.info(
-          `Server launched on host: ${Secret.App.host}:${Secret.App.port}`
-        );
+        this.log.info(`Server launched on host: ${Secret.App.host}:${Secret.App.port}`);
       });
-
     } catch (err) {
       this.log.error(`Server got an error: ${err.message}`);
       throw err;

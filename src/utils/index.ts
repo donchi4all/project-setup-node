@@ -15,8 +15,6 @@ export function randomIntegerInterval(min: number, max: number): number {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-
-
 export function randomIntegers(length: number = 6): string {
   let randInt = '';
   while (length > 0) {
@@ -28,11 +26,7 @@ export function randomIntegers(length: number = 6): string {
 }
 
 type digestTypes = 'base64' | 'hex';
-export function hash(
-  value: string,
-  algo: string = 'sha256',
-  digest: digestTypes = 'hex'
-): string {
+export function hash(value: string, algo: string = 'sha256', digest: digestTypes = 'hex'): string {
   return crypto.createHash(algo).update(value).digest(digest);
 }
 
@@ -40,7 +34,7 @@ export function hashCheck(
   value: string,
   hash: string,
   algo: string = 'sha256',
-  digest: digestTypes = 'hex'
+  digest: digestTypes = 'hex',
 ): boolean {
   return this.hash(value, algo, digest) === hash;
 }
@@ -53,11 +47,9 @@ export function base64Decode(base64: string): string {
   return Buffer.from(base64, 'base64').toString('ascii');
 }
 
-
-
 export async function extractImageFromRequest(
   request: ExpressRequest,
-  fieldName: string
+  fieldName: string,
 ): Promise<ExpressRequest['file']> {
   try {
     const multerSingle = multer().single(fieldName);

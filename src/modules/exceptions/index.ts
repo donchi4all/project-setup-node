@@ -4,9 +4,6 @@ import { DatabaseErrorHandler } from './DatabaseErrorHandler';
 import { ValidationErrorHandler } from './ValidationErrorHandler';
 import { UserErrorHandler } from './UserErrorHandler';
 import { AuthErrorHandler } from './AuthErrorHandler';
-;
-
-
 export {
   /**
    * default
@@ -15,11 +12,9 @@ export {
   /**
    * custom
    */
-
   CommonErrorHandler,
-
   DatabaseErrorHandler,
   ValidationErrorHandler,
   UserErrorHandler,
-  AuthErrorHandler
+  AuthErrorHandler,
 };

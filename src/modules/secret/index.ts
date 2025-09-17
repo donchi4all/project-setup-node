@@ -10,7 +10,6 @@ import { CorsInterface } from './ICors';
 import { UrlsInterface } from './IUrlsEnv';
 import { AuditInterface } from './IAuditEnv';
 
-
 class Secret {
   @LoggerDecorator('Env')
   private log: LoggerInterface;
@@ -20,14 +19,11 @@ class Secret {
       dotenv.config({ path: '.env' });
       this.log.info('Environment variables have been loaded successfully.');
     } else {
-      const err = new Error(
-        'Could not find .env file to supply config environment variables.'
-      );
+      const err = new Error('Could not find .env file to supply config environment variables.');
       this.log.error(err.message);
       throw err;
     }
   }
-
 
   public init(): void {
     if (fs.existsSync('.env')) {
@@ -80,8 +76,6 @@ class Secret {
     }
   }
 
-
-
   /**
    * DB environment
    */
@@ -117,7 +111,6 @@ class Secret {
     }
   }
 
-
   /**
    * Urls environment
    */
@@ -133,15 +126,12 @@ class Secret {
   }
 
   /**
- * Cors
- */
+   * Cors
+   */
   public get Cors(): CorsInterface {
     try {
       return {
-        origin: [
-          this.Urls.client,
-          ...(this.getOsEnv('CORS_ORIGIN')?.split(',') || []),
-        ],
+        origin: [this.Urls.client, ...(this.getOsEnv('CORS_ORIGIN')?.split(',') || [])],
       };
     } catch (err) {
       this.log.error(`Cors error: ${err.message}`);
@@ -163,7 +153,6 @@ class Secret {
       throw err;
     }
   }
-
 }
 
 export default new Secret();

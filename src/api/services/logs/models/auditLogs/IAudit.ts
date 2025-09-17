@@ -10,7 +10,7 @@ export interface IAuditInterface {
   url?: string;
   createdAt?: Date;
   updatedAt?: Date;
-  statusCode?: string | number
+  statusCode?: string | number;
   requestId?: string;
   device?: string;
   ipAddress?: string;
@@ -65,7 +65,15 @@ export type AuditCreationParams = Pick<
 
 export type AuditApiCreationParams = Pick<
   IAuditInterface,
-  'id' | 'tenantId' | 'userId' | 'type' | 'request' | 'response' | 'url' | 'statusCode' | 'method'
+  | 'id'
+  | 'tenantId'
+  | 'userId'
+  | 'type'
+  | 'request'
+  | 'response'
+  | 'url'
+  | 'statusCode'
+  | 'method'
   | 'headers'
   | 'service'
 >;

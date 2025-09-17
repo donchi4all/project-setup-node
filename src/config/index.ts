@@ -1,5 +1,5 @@
 import secret from '../modules/secret';
-import defaults from "./defaults";
+import defaults from './defaults';
 import dotenv from 'dotenv';
 dotenv.config({ path: '.env' });
 
@@ -24,20 +24,12 @@ export default {
   },
 
   client: {
-    resetPassword: '/new-password'
+    resetPassword: '/new-password',
   },
 
   corsOptions: {
     origin: secret.Cors.origin,
-    methods: [
-      'GET',
-      'HEAD',
-      'PUT',
-      'PATCH',
-      'POST',
-      'DELETE',
-      'OPTIONS',
-    ],
+    methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],
     allowedHeaders: [
       'Accept',
       'Content-Length',
@@ -56,8 +48,8 @@ export default {
       host: process.env.DB_HOST,
       password: process.env.DB_PASSWORD,
       port: 3306,
-      username: process.env.DB_USERNAME
-    }
+      username: process.env.DB_USERNAME,
+    },
   },
-  defaults
+  defaults,
 };

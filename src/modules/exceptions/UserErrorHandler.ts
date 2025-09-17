@@ -26,8 +26,7 @@ export class UserErrorHandler extends ErrorHandler {
     return {
       status: 422,
       code: 'INCORRECT_PASSWORD_TYPE',
-      message:
-        'Password supplied is incorrect, Please check and try again',
+      message: 'Password supplied is incorrect, Please check and try again',
     };
   }
 

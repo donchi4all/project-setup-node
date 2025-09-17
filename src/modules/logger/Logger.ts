@@ -13,7 +13,7 @@ export class Logger {
   private scope: string;
   private logger: winston.Logger;
 
-  private static parsePathToScope (filepath: string): string {
+  private static parsePathToScope(filepath: string): string {
     if (filepath.indexOf(path.sep) >= 0) {
       filepath = filepath
         .replace(process.cwd(), '')
@@ -30,7 +30,7 @@ export class Logger {
    * Constructor
    * @param scope - Logger label or file|dir path
    */
-  constructor (scope?: string) {
+  constructor(scope?: string) {
     this.scope = Logger.parsePathToScope(scope || Logger.DEFAULT_SCOPE);
 
     const loggerFormat = winston.format.printf(({ level, message, label, timestamp }) => {
@@ -48,8 +48,8 @@ export class Logger {
         new winston.transports.File({
           dirname: Logger.LOG_DIR,
           filename: `${this.scope}.log`,
-        })
-      ]
+        }),
+      ],
     });
   }
 
@@ -59,7 +59,7 @@ export class Logger {
    * @param message - Logging message
    * @param args - Additional arguments
    */
-  private log (level: 'debug' | 'info' | 'warn' | 'error', message: string, args: unknown[]): void {
+  private log(level: 'debug' | 'info' | 'warn' | 'error', message: string, args: unknown[]): void {
     this.logger[level](`${message}`, args);
   }
 
@@ -68,7 +68,7 @@ export class Logger {
    * @param message - Logging message
    * @param args - Additional arguments
    */
-  public debug (message: string, ...args: unknown[]): void {
+  public debug(message: string, ...args: unknown[]): void {
     this.log('debug', message, args);
   }
 
@@ -77,7 +77,7 @@ export class Logger {
    * @param message - Logging message
    * @param args - Additional arguments
    */
-  public info (message: string, ...args: unknown[]): void {
+  public info(message: string, ...args: unknown[]): void {
     this.log('info', message, args);
   }
 
@@ -86,7 +86,7 @@ export class Logger {
    * @param message - Logging message
    * @param args - Additional arguments
    */
-  public warn (message: string, ...args: unknown[]): void {
+  public warn(message: string, ...args: unknown[]): void {
     this.log('warn', message, args);
   }
 
@@ -95,7 +95,7 @@ export class Logger {
    * @param message - Logging message
    * @param args - Additional arguments
    */
-  public error (message: string, ...args: unknown[]): void {
+  public error(message: string, ...args: unknown[]): void {
     this.log('error', message, args);
   }
 }

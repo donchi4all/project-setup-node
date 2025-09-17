@@ -1,9 +1,13 @@
-
 import Secret from '../../../modules/secret';
 import { Models } from './models';
 import { Readable } from 'stream';
 import { Op } from 'sequelize';
-import { AuditApiCreationParams, AuditCreationParams, ModelEnum, UpdateCrudLog } from './models/auditLogs/IAudit';
+import {
+  AuditApiCreationParams,
+  AuditCreationParams,
+  ModelEnum,
+  UpdateCrudLog,
+} from './models/auditLogs/IAudit';
 
 export default class LogService {
   static enableAPILog: boolean = Secret.Audit.enableAPILog;
@@ -20,7 +24,7 @@ export default class LogService {
     if (!this.enableCrudLog) return;
     return Models.AuditLogs.update(
       { response: data.response, type: data.type },
-      { where: { requestId: data.requestId } }
+      { where: { requestId: data.requestId } },
     );
   }
 
@@ -36,9 +40,9 @@ export default class LogService {
   static maskSecretData(data: string, length: number = 1): string {
     return data
       ? data
-        ?.split('')
-        ?.fill('*', length, data.length - 1)
-        .join('')
+          ?.split('')
+          ?.fill('*', length, data.length - 1)
+          .join('')
       : null;
   }
 
@@ -57,5 +61,4 @@ export default class LogService {
 
     return (body = { ...body, password, pin });
   }
-
 }

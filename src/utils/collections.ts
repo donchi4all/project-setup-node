@@ -10,7 +10,7 @@ export default class Collections {
    * @param order - sorting order
    * @returns sorted collection
    */
-  public static sortArrayOfObjectsByKey<T extends DefaultObject> (
+  public static sortArrayOfObjectsByKey<T extends DefaultObject>(
     collection: Array<T>,
     key: string,
     order: 'ASC' | 'DESC',
@@ -50,14 +50,14 @@ export default class Collections {
         }
         return 0;
       };
-      
+
       return collection.sort(compare);
     } catch (err) {
       throw err;
     }
   }
 
-  public static compareObjects (a: unknown, b: unknown, caseSensitive: boolean = true): boolean {
+  public static compareObjects(a: unknown, b: unknown, caseSensitive: boolean = true): boolean {
     const sortObjProperties = (obj: DefaultObject) =>
       Object.keys(obj)
         .sort()
@@ -79,7 +79,7 @@ export default class Collections {
             [key]: value,
           };
         }, {});
-  
+
     if (a === b) {
       return true;
     }
@@ -98,8 +98,10 @@ export default class Collections {
     if (Object.keys(a).length !== Object.keys(b).length) {
       return false;
     }
-  
-    return JSON.stringify(sortObjProperties(a as DefaultObject))
-      === JSON.stringify(sortObjProperties(b as DefaultObject));
+
+    return (
+      JSON.stringify(sortObjProperties(a as DefaultObject)) ===
+      JSON.stringify(sortObjProperties(b as DefaultObject))
+    );
   }
 }

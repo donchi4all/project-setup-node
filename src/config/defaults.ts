@@ -1,6 +1,6 @@
-import Secret from './../modules/secret'
+import Secret from './../modules/secret';
 export default {
-    /*
+  /*
     |--------------------------------------------------------------------------
     | Pagination
     |--------------------------------------------------------------------------
@@ -8,9 +8,9 @@ export default {
     | Set default pagination
     |
     */
-    pageLimit: 10,
+  pageLimit: 10,
 
-    /*
+  /*
     |--------------------------------------------------------------------------
     | Password Reset
     |--------------------------------------------------------------------------
@@ -18,9 +18,9 @@ export default {
     | Password reset token length
     |
     */
-    tokenLength: 32,
+  tokenLength: 32,
 
-    /*
+  /*
     |--------------------------------------------------------------------------
     | User Otp Length
     |--------------------------------------------------------------------------
@@ -28,10 +28,9 @@ export default {
     | Length of generated otps
     |
     */
-    otpLength: 6,
+  otpLength: 6,
 
-
-    /*
+  /*
     |--------------------------------------------------------------------------
     | Default Otp expiration
     |--------------------------------------------------------------------------
@@ -39,9 +38,9 @@ export default {
     | Otp expiration in seconds
     |
     */
-    otpExpiration: 10,
+  otpExpiration: 10,
 
-    /*
+  /*
     |--------------------------------------------------------------------------
     | Default Client Role
     |--------------------------------------------------------------------------
@@ -49,9 +48,9 @@ export default {
     | Otp expiration in seconds
     |
     */
-    defaultClientRole: '',
+  defaultClientRole: '',
 
-    /*
+  /*
     |--------------------------------------------------------------------------
     | Default Preference
     |--------------------------------------------------------------------------
@@ -59,37 +58,33 @@ export default {
     | list the default site preferences
     |
     */
-    defaultSitePreferences: {
+  defaultSitePreferences: {},
 
-    },
-
-
-    /** 
+  /** 
         |------------------------------
         | EXCLUDE API AUDID LOGS
         |------------------------------
        */
-    excludeAPILog: [
-    ],
+  excludeAPILog: [],
 
-    /** 
+  /** 
         |------------------------------
         | Login expiration time
         |------------------------------
        */
-    expiresIn: '30m',
+  expiresIn: '30m',
 
-    // accessToken: {
-    //     secret: Secret.Salts.accessToken,
-    //     options: {
-    //         expiresIn: 60 * 60, // 1 hour in sec
-    //     },
-    // },
-    // refreshToken: {
-    //     name: 'refreshToken',
-    //     secret: Secret.Salts.refreshToken,
-    //     options: {
-    //         expiresIn: 60 * 60 * 24, // 1 day in sec
-    //     },
-    // },
+  // accessToken: {
+  //     secret: Secret.Salts.accessToken,
+  //     options: {
+  //         expiresIn: 60 * 60, // 1 hour in sec
+  //     },
+  // },
+  // refreshToken: {
+  //     name: 'refreshToken',
+  //     secret: Secret.Salts.refreshToken,
+  //     options: {
+  //         expiresIn: 60 * 60 * 24, // 1 day in sec
+  //     },
+  // },
 };

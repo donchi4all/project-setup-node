@@ -1,3 +1,3 @@
-export interface CorsInterface{
-    origin: Array<string>
+export interface CorsInterface {
+  origin: Array<string>;
 }
