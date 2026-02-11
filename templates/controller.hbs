@@ -21,7 +21,7 @@ import I{{capitalizeSingular service}}Interface, {
     I{{capitalizeSingular service}}BulkUpdateInterface
 } from "../../models/{{singular service}}/I{{capitalizeSingular service}}";
 import { removeUndefined } from "../../../utils";
-import { {{capitalizePlural service}}Dto } from "../../services/{{singular service}}/dtos/{{singular service}}.dto";
+import { {{capitalizeSingular service}}Dto } from "../../services/{{singular service}}/dtos/{{singular service}}.dto";
 import { ResponseTypeEnum, SuccessResponseModel } from "../../../modules/routes/response";
 
 @Route("{{plural service}}")
@@ -64,8 +64,8 @@ export class {{capitalizePlural service}}Controller extends Controller {
     ): Promise<SuccessResponseModel<I{{capitalizeSingular service}}Interface>> {
         try {
 
-            let data = new {{capitalizePlural service}}Dto(requestBody);
-            data = removeUndefined(data) as {{capitalizePlural service}}Dto;
+            let data = new {{capitalizeSingular service}}Dto(requestBody);
+            data = removeUndefined(data) as {{capitalizeSingular service}}Dto;
 
             const created = await {{singular service}}Service.create(data);
 
@@ -150,7 +150,7 @@ export class {{capitalizePlural service}}Controller extends Controller {
      | @summary Get {{capitalizeSingular service}}
      */
     @SuccessResponse(httpStatuses.success.code, httpStatuses.success.message)
-    @Get("{ {{~singular service~}}Id }")
+    @Get("{ {{~singular service~}}Id}")
     public async getOne{{capitalizeSingular service}}(
         @Path() {{singular service}}Id: string
     ): Promise<SuccessResponseModel<I{{capitalizeSingular service}}Interface>> {
@@ -166,7 +166,7 @@ export class {{capitalizePlural service}}Controller extends Controller {
             );
 
         } catch (err) {
-            this.log.error(`Route /{{plural service}}/${{singular service}}Id GET error: ${err}`);
+            this.log.error(`Route /{{plural service}}/${ {{~singular service~}}Id} GET error: ${err}`);
             throw err;
         }
     }
@@ -189,7 +189,7 @@ export class {{capitalizePlural service}}Controller extends Controller {
      | @summary Update {{capitalizeSingular service}}
      */
     @SuccessResponse(httpStatuses.success.code, httpStatuses.success.message)
-    @Patch("{ {{~singular service~}}Id }")
+    @Patch("{ {{~singular service~}}Id}")
     public async update{{capitalizeSingular service}}(
         @Path() {{singular service}}Id: string,
         @Body() requestBody: {{capitalizeSingular service}}CreationType
@@ -197,15 +197,15 @@ export class {{capitalizePlural service}}Controller extends Controller {
 
         try {
 
-            let data = new {{capitalizePlural service}}Dto(requestBody);
-            data = removeUndefined(data) as {{capitalizePlural service}}Dto;
+            let data = new {{capitalizeSingular service}}Dto(requestBody);
+            data = removeUndefined(data) as {{capitalizeSingular service}}Dto;
 
             await {{singular service}}Service.updateOne(data, {{singular service}}Id);
 
             return await {{singular service}}Service.findOne({{singular service}}Id);
 
         } catch (err) {
-            this.log.error(`Route /{{plural service}}/${{singular service}}Id PATCH error: ${err}`);
+            this.log.error(`Route /{{plural service}}/${ {{~singular service~}}Id} PATCH error: ${err}`);
             throw err;
         }
     }
@@ -229,7 +229,7 @@ export class {{capitalizePlural service}}Controller extends Controller {
      */
     @SuccessResponse(httpStatuses.success.code, httpStatuses.success.message)
     @Put()
-    public async updateMany{{capitalizePlural service}}(
+    public async updateMany{{capitalizeSingular service}}(
         @Body() requestBody: I{{capitalizeSingular service}}BulkUpdateInterface
     ): Promise<{ message: string }> {
 
@@ -237,8 +237,8 @@ export class {{capitalizePlural service}}Controller extends Controller {
 
             const { ids, ...body } = requestBody;
 
-            let data = new {{capitalizePlural service}}Dto(body);
-            data = removeUndefined(data) as {{capitalizePlural service}}Dto;
+            let data = new {{capitalizeSingular service}}Dto(body);
+            data = removeUndefined(data) as {{capitalizeSingular service}}Dto;
 
             await {{singular service}}Service.updateMany(data, ids);
 
@@ -262,7 +262,7 @@ export class {{capitalizePlural service}}Controller extends Controller {
      | @summary Delete {{capitalizeSingular service}}
      */
     @SuccessResponse(httpStatuses.success.code, httpStatuses.success.message)
-    @Delete("{ {{~singular service~}}Id }")
+    @Delete("{ {{~singular service~}}Id}")
     public async delete{{capitalizeSingular service}}(
         @Path() {{singular service}}Id: string
     ): Promise<{ message: string }> {
@@ -274,7 +274,7 @@ export class {{capitalizePlural service}}Controller extends Controller {
             return { message: "{{capitalizeSingular service}} deleted successfully" };
 
         } catch (err) {
-            this.log.error(`Route /{{plural service}}/${{singular service}}Id DELETE error: ${err}`);
+            this.log.error(`Route /{{plural service}}/${ {{~singular service~}}Id} DELETE error: ${err}`);
             throw err;
         }
     }

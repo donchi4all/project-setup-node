@@ -85,6 +85,7 @@ class Express {
       // Start the server on the specified port
       this.express.listen(Secret.App.port, () => {
         this.log.info(`Server launched on host: ${Secret.App.host}:${Secret.App.port}`);
+        this.log.info(`Access Swagger UI at: ${Secret.App.host}:${Secret.App.port}${config.swagger.route}`);
       });
     } catch (err) {
       this.log.error(`Server got an error: ${err.message}`);
