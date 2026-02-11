@@ -12,129 +12,299 @@ import {
     SuccessResponse,
     Tags,
 } from "tsoa";
-import {{service}}Service from "../../services/{{service}}";
+
+import {{singular service}}Service from "../../services/{{singular service}}";
 import httpStatuses from "../../../api/httpStatuses";
 import { LoggerDecorator, LoggerInterface } from "../../../modules/logger";
-import I{{capitalize service}}Interface, { {{capitalize service}}CreationType, I{{capitalize service}}BulkUpdateInterface } from "../../models/{{service}}/I{{capitalize service}}";
+import I{{capitalizeSingular service}}Interface, {
+    {{capitalizeSingular service}}CreationType,
+    I{{capitalizeSingular service}}BulkUpdateInterface
+} from "../../models/{{singular service}}/I{{capitalizeSingular service}}";
 import { removeUndefined } from "../../../utils";
-import { {{capitalize service}}sDto } from "../../services/{{service}}/dtos/{{service}}.dto";
-import {{service}}sService from "../../services/{{service}}";
-import { IPagination } from "../../../utils/queries/interface";
+import { {{capitalizePlural service}}Dto } from "../../services/{{singular service}}/dtos/{{singular service}}.dto";
 import { ResponseTypeEnum, SuccessResponseModel } from "../../../modules/routes/response";
 
+@Route("{{plural service}}")
+@Tags("{{capitalizePlural service}}")
+export class {{capitalizePlural service}}Controller extends Controller {
 
-@Route('{{service}}s')
-@Tags('{{capitalize service}}s')
-export class {{capitalize service}}sController extends Controller {
-    @LoggerDecorator('Controller.{{uppercase service}}')
+    @LoggerDecorator("Controller.{{uppercase service}}")
     private log: LoggerInterface;
 
+    /**
+     |---------------------------------------------------
+     | SUMMARY
+     |---------------------------------------------------
+     | Creates a new {{capitalizeSingular service}} record.
+     |
+     | **Flow:**
+     | - Accepts {{capitalizeSingular service}} payload
+     | - Validates and sanitizes input
+     | - Persists record in storage
+     |
+     |---------------------------------------------------
+     | INSTRUCTIONS
+     |---------------------------------------------------
+     | 1. Provide valid {{capitalizeSingular service}} payload.
+     | 2. All undefined values will be removed automatically.
+     | 3. Successfully created record will be returned.
+     |
+     |---------------------------------------------------
+     | @param requestBody - {{capitalizeSingular service}} creation payload
+     | @returns Newly created {{capitalizeSingular service}}
+     |
+     | @route POST /{{plural service}}
+     | @tags {{capitalizePlural service}}
+     | @summary Create {{capitalizeSingular service}}
+     */
     @SuccessResponse(httpStatuses.success.code, httpStatuses.success.message)
     @Post()
-    public async create{{capitalize service}}(
-        @Body() requestBody: {{capitalize service}}CreationType
-    ): Promise<SuccessResponseModel<I{{capitalize service}}Interface>> {
+    public async create{{capitalizeSingular service}}(
+        @Body() requestBody: {{capitalizeSingular service}}CreationType
+    ): Promise<SuccessResponseModel<I{{capitalizeSingular service}}Interface>> {
         try {
-            let data = new {{capitalize service}}sDto(requestBody);
-            data = removeUndefined(data) as {{capitalize service}}sDto;
 
-            const create{{capitalize service}} = await {{service}}Service.create(data);
-            return new SuccessResponseModel<I{{capitalize service}}Interface>(create{{capitalize service}})
+            let data = new {{capitalizePlural service}}Dto(requestBody);
+            data = removeUndefined(data) as {{capitalizePlural service}}Dto;
+
+            const created = await {{singular service}}Service.create(data);
+
+            return new SuccessResponseModel<I{{capitalizeSingular service}}Interface>(created);
+
         } catch (err) {
-            this.log.error(`Route /{{service}}s post with err: ${err}`);
-            throw err
+            this.log.error(`Route /{{plural service}} POST error: ${err}`);
+            throw err;
         }
     }
 
+    /**
+     |---------------------------------------------------
+     | SUMMARY
+     |---------------------------------------------------
+     | Retrieves paginated list of {{plural service}}.
+     |
+     | **Flow:**
+     | - Accepts pagination and filtering parameters
+     | - Fetches matching records
+     | - Returns records with pagination metadata
+     |
+     |---------------------------------------------------
+     | INSTRUCTIONS
+     |---------------------------------------------------
+     | 1. Provide pagination parameters if required.
+     | 2. Use search, date filters for refined results.
+     |
+     |---------------------------------------------------
+     | @returns Paginated list of {{plural service}}
+     |
+     | @route GET /{{plural service}}
+     | @tags {{capitalizePlural service}}
+     | @summary List {{capitalizePlural service}}
+     */
     @SuccessResponse(httpStatuses.success.code, httpStatuses.success.message)
     @Get()
-    public async list{{capitalize service}}s( 
-    @Query() page: number = 0,
-    @Query() limit: number = 50,
-    @Query() search?: string,
-    @Query() from?: string,
-    @Query() to?: string
-    ): Promise<SuccessResponseModel<I{{capitalize service}}Interface[]>> {
+    public async list{{capitalizePlural service}}(
+        @Query() page: number = 0,
+        @Query() limit: number = 50,
+        @Query() search?: string,
+        @Query() from?: string,
+        @Query() to?: string
+    ): Promise<SuccessResponseModel<I{{capitalizeSingular service}}Interface[]>> {
+
         try {
-            let queries = {page, limit, search, from, to};
-            queries = removeUndefined(queries);
-           
-            const { data: list{{capitalize service}}s, pagination } = await {{service}}Service.findAll(queries);
-          
-            return new SuccessResponseModel<I{{capitalize service}}Interface[]>(list{{capitalize service}}s, "{{capitalize service}}'s successfully listed", ResponseTypeEnum.SUCCESS, pagination);
+
+            let queries = removeUndefined({ page, limit, search, from, to });
+
+            const { data, pagination } = await {{singular service}}Service.findAll(queries);
+
+            return new SuccessResponseModel<I{{capitalizeSingular service}}Interface[]>(
+                data,
+                "{{capitalizePlural service}} successfully listed",
+                ResponseTypeEnum.SUCCESS,
+                pagination
+            );
+
         } catch (err) {
-            this.log.error(`Route /{{service}}s get with err: ${err}`);
-            throw err
+            this.log.error(`Route /{{plural service}} GET error: ${err}`);
+            throw err;
         }
     }
 
+    /**
+     |---------------------------------------------------
+     | SUMMARY
+     |---------------------------------------------------
+     | Retrieves a single {{capitalizeSingular service}} by ID.
+     |
+     |---------------------------------------------------
+     | INSTRUCTIONS
+     |---------------------------------------------------
+     | 1. Provide valid {{singular service}}Id.
+     |
+     |---------------------------------------------------
+     | @param {{singular service}}Id - Unique identifier
+     | @returns {{capitalizeSingular service}} record
+     |
+     | @route GET /{{plural service}}/{id}
+     | @tags {{capitalizePlural service}}
+     | @summary Get {{capitalizeSingular service}}
+     */
     @SuccessResponse(httpStatuses.success.code, httpStatuses.success.message)
-    @Get('{ {{~service~}}Id}')
-    public async getOne{{capitalize service}}({{service}}Id: string): Promise<SuccessResponseModel<I{{capitalize service}}Interface>> {
+    @Get("{ {{~singular service~}}Id }")
+    public async getOne{{capitalizeSingular service}}(
+        @Path() {{singular service}}Id: string
+    ): Promise<SuccessResponseModel<I{{capitalizeSingular service}}Interface>> {
+
         try {
-            const found{{capitalize service}} = await {{service}}Service.findOne({{service}}Id);
-            return new SuccessResponseModel<I{{capitalize service}}Interface>(found{{capitalize service}}, "{{capitalize service}} successfully retrieved", ResponseTypeEnum.SUCCESS);
+
+            const found = await {{singular service}}Service.findOne({{singular service}}Id);
+
+            return new SuccessResponseModel(
+                found,
+                "{{capitalizeSingular service}} successfully retrieved",
+                ResponseTypeEnum.SUCCESS
+            );
+
         } catch (err) {
-            this.log.error(`Route /{{service}}s/${{service}}Id get with err: ${err}`);
-            throw err
+            this.log.error(`Route /{{plural service}}/${{singular service}}Id GET error: ${err}`);
+            throw err;
         }
     }
 
+    /**
+     |---------------------------------------------------
+     | SUMMARY
+     |---------------------------------------------------
+     | Updates a single {{capitalizeSingular service}}.
+     |
+     |---------------------------------------------------
+     | INSTRUCTIONS
+     |---------------------------------------------------
+     | 1. Provide {{singular service}}Id.
+     | 2. Provide update payload.
+     |
+     |---------------------------------------------------
+     | @route PATCH /{{plural service}}/{id}
+     | @tags {{capitalizePlural service}}
+     | @summary Update {{capitalizeSingular service}}
+     */
     @SuccessResponse(httpStatuses.success.code, httpStatuses.success.message)
-    @Patch('{ {{~service~}}Id}')
-    public async update{{capitalize service}}({{service}}Id: string, @Body() requestBody: {{capitalize service}}CreationType ): Promise<I{{capitalize service}}Interface> {
+    @Patch("{ {{~singular service~}}Id }")
+    public async update{{capitalizeSingular service}}(
+        @Path() {{singular service}}Id: string,
+        @Body() requestBody: {{capitalizeSingular service}}CreationType
+    ): Promise<I{{capitalizeSingular service}}Interface> {
+
         try {
-            let data = new {{capitalize service}}sDto(requestBody);
-            data = removeUndefined(data) as {{capitalize service}}sDto;
-           
-            await {{service}}Service.updateOne(data, {{service}}Id);
-            return await {{service}}Service.findOne({{service}}Id);
+
+            let data = new {{capitalizePlural service}}Dto(requestBody);
+            data = removeUndefined(data) as {{capitalizePlural service}}Dto;
+
+            await {{singular service}}Service.updateOne(data, {{singular service}}Id);
+
+            return await {{singular service}}Service.findOne({{singular service}}Id);
+
         } catch (err) {
-            this.log.error(`Route /{{service}}s/${{service}}Id patch with err: ${err}`);
-            throw err
+            this.log.error(`Route /{{plural service}}/${{singular service}}Id PATCH error: ${err}`);
+            throw err;
         }
     }
 
+    /**
+     |---------------------------------------------------
+     | SUMMARY
+     |---------------------------------------------------
+     | Bulk updates multiple {{plural service}}.
+     |
+     |---------------------------------------------------
+     | INSTRUCTIONS
+     |---------------------------------------------------
+     | 1. Provide list of IDs.
+     | 2. Provide update payload.
+     |
+     |---------------------------------------------------
+     | @route PUT /{{plural service}}
+     | @tags {{capitalizePlural service}}
+     | @summary Bulk update {{capitalizePlural service}}
+     */
     @SuccessResponse(httpStatuses.success.code, httpStatuses.success.message)
     @Put()
-    public async updateMany{{capitalize service}}(@Body()requestBody: I{{capitalize service}}BulkUpdateInterface): Promise<{message: string}> {
+    public async updateMany{{capitalizePlural service}}(
+        @Body() requestBody: I{{capitalizeSingular service}}BulkUpdateInterface
+    ): Promise<{ message: string }> {
+
         try {
-            const body = requestBody;
-            const ids = requestBody.ids;
-            let data = new {{capitalize service}}sDto(body);
-            data = removeUndefined(data) as {{capitalize service}}sDto;
-           
-            await {{service}}sService.updateMany(data, ids);
-            return { message: '{{capitalize service}}s updated successfully' };
+
+            const { ids, ...body } = requestBody;
+
+            let data = new {{capitalizePlural service}}Dto(body);
+            data = removeUndefined(data) as {{capitalizePlural service}}Dto;
+
+            await {{singular service}}Service.updateMany(data, ids);
+
+            return { message: "{{capitalizePlural service}} updated successfully" };
+
         } catch (err) {
-            this.log.error(`Route /{{service}}s put with err: ${err}`);
-            throw err
+            this.log.error(`Route /{{plural service}} PUT error: ${err}`);
+            throw err;
         }
     }
 
+    /**
+     |---------------------------------------------------
+     | SUMMARY
+     |---------------------------------------------------
+     | Deletes a single {{capitalizeSingular service}}.
+     |
+     |---------------------------------------------------
+     | @route DELETE /{{plural service}}/{id}
+     | @tags {{capitalizePlural service}}
+     | @summary Delete {{capitalizeSingular service}}
+     */
     @SuccessResponse(httpStatuses.success.code, httpStatuses.success.message)
-    @Delete('{ {{~service~}}Id}')
-    public async delete{{capitalize service}}({{service}}Id: string): Promise<{message: string}> {
+    @Delete("{ {{~singular service~}}Id }")
+    public async delete{{capitalizeSingular service}}(
+        @Path() {{singular service}}Id: string
+    ): Promise<{ message: string }> {
+
         try {
-            const id = {{service}}Id;           
-            await {{service}}Service.delete(id);
-            return { message: '{{capitalize service}} deleted successfully' };
+
+            await {{singular service}}Service.delete({{singular service}}Id);
+
+            return { message: "{{capitalizeSingular service}} deleted successfully" };
+
         } catch (err) {
-            this.log.error(`Route /{{service}}s delete with err: ${err}`);
-            throw err
+            this.log.error(`Route /{{plural service}}/${{singular service}}Id DELETE error: ${err}`);
+            throw err;
         }
     }
 
+    /**
+     |---------------------------------------------------
+     | SUMMARY
+     |---------------------------------------------------
+     | Bulk deletes multiple {{plural service}}.
+     |
+     |---------------------------------------------------
+     | @route DELETE /{{plural service}}
+     | @tags {{capitalizePlural service}}
+     | @summary Bulk delete {{capitalizePlural service}}
+     */
     @SuccessResponse(httpStatuses.success.code, httpStatuses.success.message)
     @Delete()
-    public async deleteMany{{capitalize service}}s( @Body() requestBody: { ids: I{{capitalize service}}BulkUpdateInterface['ids'] }): Promise<{message: string}> {
+    public async deleteMany{{capitalizePlural service}}(
+        @Body() requestBody: { ids: I{{capitalizeSingular service}}BulkUpdateInterface["ids"] }
+    ): Promise<{ message: string }> {
+
         try {
-            const ids = requestBody.ids;       
-            await {{service}}sService.deleteMany(ids);
-            return { message: '{{capitalize service}}s deleted successfully' };
+
+            await {{singular service}}Service.deleteMany(requestBody.ids);
+
+            return { message: "{{capitalizePlural service}} deleted successfully" };
+
         } catch (err) {
-            this.log.error(`Route /{{service}}s delete with err: ${err}`);
-            throw err
+            this.log.error(`Route /{{plural service}} DELETE MANY error: ${err}`);
+            throw err;
         }
     }
 }

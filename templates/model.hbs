@@ -1,6 +1,5 @@
 import {
     Table,
-    AutoIncrement,
     PrimaryKey,
     Column,
     Model,
@@ -13,52 +12,85 @@ import {
     DeletedAt
 } from 'sequelize-typescript';
 
-import I{{capitalize service}}Interface, { 
-    {{capitalize service}}CreationType 
-} from "./I{{capitalize service}}";
+import I{{capitalizeSingular service}}Interface, { 
+    {{capitalizeSingular service}}CreationType 
+} from "./I{{capitalizeSingular service}}";
 
+/**
+ * {{capitalizePlural service}} Model
+ *
+ * Represents the {{plural service}} table in the database.
+ * - Primary key is UUID
+ * - Supports soft deletes (paranoid)
+ * - Tracks creation and update timestamps automatically
+ */
 @Table({
-    tableName: '{{service}}s',
-    timestamps: true,
-    paranoid: true
+    tableName: '{{plural service}}',
+    timestamps: true,   // Enables createdAt & updatedAt
+    paranoid: true      // Enables deletedAt (soft delete)
 })
-export class {{capitalize service}} extends Model<I{{capitalize service}}Interface, {{capitalize service}}CreationType> {
+export class {{capitalizeSingular service}} extends Model<
+    I{{capitalizeSingular service}}Interface,
+    {{capitalizeSingular service}}CreationType
+> {
 
+    /**
+     * Primary identifier (UUID)
+     */
     @PrimaryKey
     @Column({
         type: DataType.UUID,
         defaultValue: DataType.UUIDV4,
     })
-    id!: I{{capitalize service}}Interface['id'];
+    id!: I{{capitalizeSingular service}}Interface['id'];
 
+    /**
+     * Unique name for the {{singular service}}
+     */
     @Unique(true)
     @AllowNull(false)
     @Column(DataType.STRING)
-    name!: I{{capitalize service}}Interface['name'];
+    name!: I{{capitalizeSingular service}}Interface['name'];
 
+    /**
+     * Optional additional string field
+     */
     @Column(DataType.STRING)
-    someOtherString!: I{{capitalize service}}Interface['someOtherString'];
+    someOtherString!: I{{capitalizeSingular service}}Interface['someOtherString'];
 
+    /**
+     * Reference to the user who created this {{singular service}}
+     */
     @AllowNull(false)
     @Column(DataType.UUID)
-    createdBy!: I{{capitalize service}}Interface['createdBy'];
+    createdBy!: I{{capitalizeSingular service}}Interface['createdBy'];
 
+    /**
+     * Soft delete timestamp
+     * Automatically handled by Sequelize paranoid mode
+     */
     @Default(null)
     @DeletedAt
     @Column(DataType.DATE)
-    deletedAt!: I{{capitalize service}}Interface['deletedAt'];
+    deletedAt!: I{{capitalizeSingular service}}Interface['deletedAt'];
 
+    /**
+     * Timestamp for when record was created
+     */
     @CreatedAt
     @Column({
         type: DataType.DATE,
         defaultValue: DataType.NOW,
     })
-    createdAt!: I{{capitalize service}}Interface['createdAt'];
+    createdAt!: I{{capitalizeSingular service}}Interface['createdAt'];
 
+    /**
+     * Timestamp for when record was last updated
+     */
     @UpdatedAt
     @Column({
         type: DataType.DATE,
         defaultValue: DataType.NOW,
     })
-    updatedAt!: I{{capitalize service}}Interface['updatedAt'];
+    updatedAt!: I{{capitalizeSingular service}}Interface['updatedAt'];
 }

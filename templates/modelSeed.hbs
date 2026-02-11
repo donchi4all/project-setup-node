@@ -2,30 +2,33 @@
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
+  /**
+   * Seed the {{plural service}} table
+   */
   async up(queryInterface, Sequelize) {
-    /**
-     * Add seed commands here.
-     */
-
-    await queryInterface.bulkInsert('{{service}}s', [{
-      id: '{{uuid}}',
-      email: '{{email}}',
-      password: '{{hashedPassword}}', //'{{plainPassword}}',
-      status: '{{status}}',
-      createdAt: new Date(),
-      updatedAt: new Date()
-    }], 
-    {
-      // Add the updateOnDuplicate option to handle duplicates
-      updateOnDuplicate: ['status', 'updatedAt'],
-    });
-
+    await queryInterface.bulkInsert(
+      '{{plural service}}',
+      [
+        {
+          id: '{{uuid}}',
+          email: '{{email}}',
+          password: '{{hashedPassword}}', // '{{plainPassword}}' (for reference)
+          status: '{{status}}',
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+      ],
+      {
+        // Handle duplicates by updating these fields
+        updateOnDuplicate: ['status', 'updatedAt'],
+      }
+    );
   },
 
+  /**
+   * Remove seeded {{plural service}} entries
+   */
   async down(queryInterface, Sequelize) {
-    /**
-     * Add commands to revert user seed here.
-     */
-    await queryInterface.bulkDelete('{{service}}s', null, {});
-  }
+    await queryInterface.bulkDelete('{{plural service}}', null, {});
+  },
 };

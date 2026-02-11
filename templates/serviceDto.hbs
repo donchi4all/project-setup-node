@@ -1,10 +1,20 @@
-export class {{capitalize service}}sDto {
-    constructor(data: Record<string, any>) {
-        this.name = data.name;
-        this.someOtherString = data.someOtherString;
-        this.createdBy = data.createdBy;
-    }
-    readonly name!: string;
-    readonly someOtherString!: string;
-    readonly createdBy: string;
+/**
+ * Data Transfer Object for {{singular service}}
+ * Used to validate and transfer data between layers
+ */
+export class {{capitalizeSingular service}}Dto {
+  constructor(data: Record<string, any>) {
+    this.name = data.name;
+    this.someOtherString = data.someOtherString;
+    this.createdBy = data.createdBy;
+  }
+
+  /** Name of the {{singular service}} */
+  readonly name!: string;
+
+  /** Optional additional string field */
+  readonly someOtherString!: string;
+
+  /** ID of the user who created this {{singular service}} */
+  readonly createdBy!: string;
 }

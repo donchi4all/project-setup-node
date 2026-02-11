@@ -1,57 +1,84 @@
-import I{{capitalize service}}Interface, {  {{capitalize service}}CreationType } from "../../../models/{{service}}/I{{capitalize service}}";
-import { {{capitalize service}} } from "../../../models/{{service}}";
+import I{{capitalizeSingular service}}Interface, { {{capitalizeSingular service}}CreationType } from "../../../models/{{singular service}}/I{{capitalizeSingular service}}";
+import { {{capitalizeSingular service}} } from "../../../models/{{singular service}}";
 import { getAllQuery } from "../../../../utils/queries";
 import { IPagination } from "../../../../utils/queries/interface";
 import { Queries } from "../../../../interfaces/queries";
 import { Op } from 'sequelize';
 
-export class {{capitalize service}}Repo {
- 
-    public getAll = async (queries: Queries): Promise<{ data: I{{capitalize service}}Interface[], pagination: IPagination }> => {
-        return await getAllQuery<{{capitalize service}}>({
-            queries: { ...queries, deletedAt: null },
-            model: {{capitalize service}},
-            searchColumns: ['name']
-        });
-    };
+/**
+ * Repository layer for {{plural service}}
+ * Handles direct database operations using Sequelize
+ */
+export class {{capitalizeSingular service}}Repo {
 
-    public getOne = async (id: string): Promise<I{{capitalize service}}Interface | null> => {
-        return await {{capitalize service}}.findOne({ where: { id } });
-    };
-  
-    public create = async (data: {{capitalize service}}CreationType): Promise<I{{capitalize service}}Interface> => {
-       return await {{capitalize service}}.create(data);
-    };
+  /**
+   * Fetch all {{plural service}} with optional query parameters
+   * @param queries Pagination, search, or filter queries
+   */
+  public getAll = async (queries: Queries): Promise<{ data: I{{capitalizeSingular service}}Interface[], pagination: IPagination }> => {
+    return await getAllQuery<{{capitalizeSingular service}}>({
+      queries: { ...queries, deletedAt: null },
+      model: {{capitalizeSingular service}},
+      searchColumns: ['name'],
+    });
+  };
 
-    public updateOne = async (data: Partial<{{capitalize service}}CreationType>, id: string): Promise<I{{capitalize service}}Interface | null> => {
-         await {{capitalize service}}.update(data, { where: { id } });
-         return await this.getOne(id);
-    };
+  /**
+   * Fetch a single {{singular service}} by ID
+   * @param id UUID of the {{singular service}}
+   */
+  public getOne = async (id: string): Promise<I{{capitalizeSingular service}}Interface | null> => {
+    return await {{capitalizeSingular service}}.findOne({ where: { id } });
+  };
 
-    public updateMany = async (data: Partial<{{capitalize service}}CreationType>, ids: string[]) => {
-        return await {{capitalize service}}.update(data, {
-            where: {
-                id: {
-                    [Op.in]: ids
-                }
-            }
-        });
-    };
+  /**
+   * Create a new {{singular service}}
+   * @param data Creation DTO for {{singular service}}
+   */
+  public create = async (data: {{capitalizeSingular service}}CreationType): Promise<I{{capitalizeSingular service}}Interface> => {
+    return await {{capitalizeSingular service}}.create(data);
+  };
 
-    public deleteOne = async (id: string): Promise<number> => {
-        return await {{capitalize service}}.destroy({ where: { id } });
-    };
+  /**
+   * Update a single {{singular service}} by ID
+   * @param data Partial fields to update
+   * @param id UUID of the {{singular service}} to update
+   */
+  public updateOne = async (data: Partial<{{capitalizeSingular service}}CreationType>, id: string): Promise<I{{capitalizeSingular service}}Interface | null> => {
+    await {{capitalizeSingular service}}.update(data, { where: { id } });
+    return await this.getOne(id);
+  };
 
-    public deleteMany = async (ids: string[]): Promise<number> => {
-        return await {{capitalize service}}.destroy({
-            where: {
-                id: {
-                    [Op.in]: ids
-                }
-            }
-        });
-    };
+  /**
+   * Bulk update multiple {{plural service}}
+   * @param data Partial fields to update
+   * @param ids Array of UUIDs of {{plural service}} to update
+   */
+  public updateMany = async (data: Partial<{{capitalizeSingular service}}CreationType>, ids: string[]) => {
+    return await {{capitalizeSingular service}}.update(data, {
+      where: { id: { [Op.in]: ids } }
+    });
+  };
+
+  /**
+   * Delete a single {{singular service}} by ID
+   * @param id UUID of the {{singular service}} to delete
+   */
+  public deleteOne = async (id: string): Promise<number> => {
+    return await {{capitalizeSingular service}}.destroy({ where: { id } });
+  };
+
+  /**
+   * Bulk delete multiple {{plural service}}
+   * @param ids Array of UUIDs of {{plural service}} to delete
+   */
+  public deleteMany = async (ids: string[]): Promise<number> => {
+    return await {{capitalizeSingular service}}.destroy({
+      where: { id: { [Op.in]: ids } }
+    });
+  };
 }
-  
-const {{service}}Repo = new {{capitalize service}}Repo();
-export default {{service}}Repo;
+
+/** Singleton instance for {{plural service}} repository */
+const {{singular service}}Repo = new {{capitalizeSingular service}}Repo();
+export default {{singular service}}Repo;

@@ -1,34 +1,68 @@
 import { Queries } from '../../../interfaces/queries';
-import { {{capitalize service}}sDto } from './dtos/{{service}}.dto';
-import {{service}}Repo from './repository/{{service}}.repository';
+import { {{capitalizeSingular service}}Dto } from './dtos/{{singular service}}.dto';
+import {{singular service}}Repo from './repository/{{singular service}}.repository';
 
-export default class {{capitalize service}}Service {
+/**
+ * Service layer for {{plural service}}
+ * Handles business logic and communicates with the repository
+ */
+export default class {{capitalizeSingular service}}Service {
 
-    static findAll = async (queries?: Queries) => {
-        return await {{service}}Repo.getAll(queries);
-    };
+  /**
+   * Fetch all {{plural service}} with optional query parameters
+   * @param queries Optional pagination, search, or filter queries
+   */
+  static findAll = async (queries?: Queries) => {
+    return await {{singular service}}Repo.getAll(queries);
+  };
 
-    static findOne = async (id: string) => {
-        return await {{service}}Repo.getOne(id);
-    };
+  /**
+   * Fetch a single {{singular service}} by ID
+   * @param id The UUID of the {{singular service}}
+   */
+  static findOne = async (id: string) => {
+    return await {{singular service}}Repo.getOne(id);
+  };
 
-    static create = async (data: {{capitalize service}}sDto) => {
-        return await {{service}}Repo.create(data);
-    };
+  /**
+   * Create a new {{singular service}}
+   * @param data DTO containing the data for the new {{singular service}}
+   */
+  static create = async (data: {{capitalizeSingular service}}Dto) => {
+    return await {{singular service}}Repo.create(data);
+  };
 
-    static updateOne = async (data: {{capitalize service}}sDto, id: string) => {
-        return await {{service}}Repo.updateOne(data, id);
-    };
+  /**
+   * Update a single {{singular service}} by ID
+   * @param data DTO containing the updated data
+   * @param id The UUID of the {{singular service}} to update
+   */
+  static updateOne = async (data: {{capitalizeSingular service}}Dto, id: string) => {
+    return await {{singular service}}Repo.updateOne(data, id);
+  };
 
-    static updateMany = async (data: {{capitalize service}}sDto, ids: string[]) => {
-        return await {{service}}Repo.updateMany(data, ids);
-    };
+  /**
+   * Bulk update multiple {{plural service}}
+   * @param data DTO containing fields to update
+   * @param ids Array of UUIDs of {{plural service}} to update
+   */
+  static updateMany = async (data: {{capitalizeSingular service}}Dto, ids: string[]) => {
+    return await {{singular service}}Repo.updateMany(data, ids);
+  };
 
-    static delete = async (id: string) => {
-        return await {{service}}Repo.deleteOne(id);
-    };
+  /**
+   * Delete a single {{singular service}} by ID
+   * @param id The UUID of the {{singular service}} to delete
+   */
+  static delete = async (id: string) => {
+    return await {{singular service}}Repo.deleteOne(id);
+  };
 
-    static deleteMany = async (ids: string[]) => {
-        return await {{service}}Repo.deleteMany(ids);
-    };
+  /**
+   * Bulk delete multiple {{plural service}}
+   * @param ids Array of UUIDs of {{plural service}} to delete
+   */
+  static deleteMany = async (ids: string[]) => {
+    return await {{singular service}}Repo.deleteMany(ids);
+  };
 }
